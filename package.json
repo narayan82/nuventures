@@ -1,0 +1,23 @@
+{
+  "name": "nuventures",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+  "build:js": "vite build",
+  "build:css": "sass src/scss/main.scss assets/dist/css/main.css --style=compressed",
+  "build": "npm run build:js && npm run build:css",
+  "watch:css": "sass --watch src/scss/main.scss:assets/dist/css/main.css"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "devDependencies": {
+    "sass": "^1.102.0",
+    "vite": "^8.1.5"
+  },
+  "dependencies": {
+    "gsap": "^3.15.0"
+  }
+}
