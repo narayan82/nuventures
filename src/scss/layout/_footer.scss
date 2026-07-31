@@ -1,0 +1,152 @@
+@use '../base/variables' as *;
+
+.site-footer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 272px;
+  padding: 40px 20px;
+  background-color: #262626;
+  color: $color-white;
+  font-family: Inter, sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  margin-top: 40px;
+  text-align: center;
+
+
+  &__inner {
+    display: flex;
+    flex-direction: column;
+    gap: 38px;
+    align-items: center;
+    width: min(564px, 100%);
+  }
+
+  &__legal {
+    width: 100%;
+    line-height: 22px;
+  }
+
+  &__legal p {
+    margin: 0;
+  }
+
+  &__legal a,
+  &__navigation a {
+    text-decoration-line: underline;
+    text-decoration-style: solid;
+    text-decoration-thickness: from-font;
+    text-underline-offset: auto;
+    text-decoration-skip-ink: none;
+    transition: opacity 180ms ease;
+  }
+
+  &__legal a:hover,
+  &__navigation a:hover {
+    opacity: 0.72;
+  }
+
+  &__navigation {
+    width: 100%;
+    line-height: 48px;
+  }
+
+  &__navigation ul,
+  &__socials {
+    display: flex;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+  }
+
+  &__navigation ul {
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &__navigation li {
+    display: flex;
+    align-items: center;
+  }
+
+  &__navigation li:not(:last-child)::after {
+    margin: 0 10px;
+    content: '|';
+  }
+
+  &__socials {
+    gap: 13px;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &__socials a {
+    display: grid;
+    width: 24px;
+    height: 24px;
+    opacity: 1;
+    place-items: center;
+    transition: opacity 180ms ease;
+  }
+
+  &__socials a:hover {
+    opacity: 0.7;
+  }
+
+  &__socials img {
+    display: block;
+    width: 24px;
+    max-width: none;
+    height: 24px;
+  }
+
+  a:focus-visible {
+    border-radius: 2px;
+    outline: 2px solid $color-white;
+    outline-offset: 4px;
+  }
+}
+
+@media (max-width: $breakpoint-tablet) {
+  .site-footer {
+    padding-inline: 24px;
+  }
+}
+
+@media (max-width: $breakpoint-mobile) {
+  .site-footer {
+    min-height: 0;
+    padding: 40px 20px;
+
+    &__inner {
+      gap: 30px;
+    }
+
+    &__legal {
+      max-width: 360px;
+    }
+
+    &__navigation {
+      line-height: 32px;
+    }
+
+    &__navigation ul {
+      gap: 8px 20px;
+    }
+
+    &__navigation li:not(:last-child)::after {
+      display: none;
+    }
+
+    &__navigation a,
+    &__socials a {
+      min-height: 36px;
+    }
+
+    &__socials a {
+      width: 36px;
+    }
+  }
+}

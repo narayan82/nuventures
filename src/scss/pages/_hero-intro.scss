@@ -1,0 +1,178 @@
+@use '../base/variables' as *;
+
+.hero-intro {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 259px;
+  padding: 40px 40px;
+
+  &__copy {
+    width: min(640px, 100%);
+    margin: 0;
+    color: #585e68;
+    font-family: Geist, sans-serif;
+    font-size: 34px;
+    font-weight: 200;
+    line-height: 50px;
+    text-align: center;
+  }
+
+  &__marker-wrap {
+    display: inline;
+    text-decoration-color: transparent;
+    text-decoration-line: underline;
+    text-decoration-thickness: 2px;
+    text-underline-offset: 0.20em;
+    transition: text-decoration-color 180ms ease;
+  }
+
+  &__detail-trigger {
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: inherit;
+    font: inherit;
+    line-height: inherit;
+    vertical-align: baseline;
+    cursor: pointer;
+  }
+
+  &__detail-lead {
+    color: inherit;
+    font-weight: 700;
+  }
+
+  &__marker-wrap:hover {
+    text-decoration-color: rgba($color-brand-red, 1);
+  }
+
+  &__marker-wrap:focus-visible {
+    border-radius: 2px;
+    outline: 2px solid rgba($color-brand-red, 0.55);
+    outline-offset: 3px;
+  }
+
+  &__marker {
+    position: relative;
+    z-index: 2;
+    padding: 0;
+    background-color: transparent;
+    color: inherit;
+    font: inherit;
+    transition: color 0s linear 500ms;
+  }
+
+  &.is-animating &__copy {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+
+  &.is-visible &__copy {
+    opacity: 1;
+    transform: translateY(0);
+    transition:
+      opacity 500ms ease,
+      transform 500ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  &.is-typing &__copy {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  &__typed-char {
+    opacity: 0;
+    transition: opacity 70ms ease;
+  }
+
+  &__typed-char.is-visible {
+    opacity: 1;
+  }
+
+  &__copy.is-swap-exiting {
+    opacity: 0;
+    transform: translateY(-6px);
+    transition:
+      opacity 220ms ease,
+      transform 220ms ease;
+  }
+
+  &__copy.is-swap-entering {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+
+  &__copy.is-swap-entering.is-swap-visible {
+    opacity: 1;
+    transform: translateY(0);
+    transition:
+      opacity 380ms ease,
+      transform 380ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  &__marker.is-marker-ready {
+    background-color: #f8e7a1;
+    color: $color-brand-red;
+  }
+
+  &__marker-wrap > .hero-intro__marker-static {
+    z-index: 1 !important;
+  }
+}
+
+@media (max-width: $breakpoint-tablet) {
+  .hero-intro {
+    min-height: 235px;
+    padding: 60px 24px;
+
+    &__copy {
+      max-width: 560px;
+      font-size: 28px;
+      line-height: 42px;
+    }
+  }
+}
+
+@media (max-width: $breakpoint-mobile) {
+  .hero-intro {
+    min-height: 220px;
+    padding: 48px 20px;
+
+    &__copy {
+      max-width: 460px;
+      font-size: 24px;
+      line-height: 36px;
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-intro {
+    &__copy,
+    &.is-animating &__copy,
+    &.is-visible &__copy,
+    &__copy.is-swap-exiting,
+    &__copy.is-swap-entering,
+    &__copy.is-swap-entering.is-swap-visible {
+      opacity: 1;
+      transform: none;
+      transition: none;
+    }
+
+    &__marker {
+      background-color: transparent;
+      transition: none;
+    }
+
+    &__typed-char {
+      opacity: 1;
+      transition: none;
+    }
+
+    &__marker.is-marker-ready {
+      background-color: #f8e7a1;
+    }
+  }
+}

@@ -1,0 +1,267 @@
+@use '../base/variables' as *;
+
+.companies-we-back {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 30px;
+  min-height: 437px;
+  padding: 20px 0;
+  background-color: $color-white;
+
+  &__title {
+    width: min(870px, 100%);
+    margin: 0;
+    color: #141b34;
+    font-family: Geist, sans-serif;
+    font-size: 24px;
+    font-weight: 200;
+    line-height: 48px;
+    text-align: center;
+    text-box-edge: cap alphabetic;
+    text-box-trim: trim-both;
+  }
+
+  &__track {
+    display: flex;
+    gap: 15px;
+    width: min(1200px, 100%);
+    overflow-x: auto;
+    overscroll-behavior-inline: contain;
+    scrollbar-width: none;
+    scroll-behavior: smooth;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  &__track::-webkit-scrollbar {
+    display: none;
+  }
+
+  &.is-carousel &__track {
+    padding-inline-start: 20px;
+    padding-inline-end: 20px;
+    scroll-padding-inline-start: 20px;
+    scroll-padding-inline-end: 20px;
+  }
+
+  &__card {
+    display: flex;
+    flex: 0 0 390px;
+    flex-direction: column;
+    width: 390px;
+    height: 340px;
+    overflow: hidden;
+    border: 1px solid $color-border;
+    border-radius: 12px;
+    background-color: $color-white;
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+    transition: border-color 180ms ease;
+  }
+
+  &__media {
+    position: relative;
+    display: block;
+    flex: 0 0 260px;
+    width: 100%;
+    height: 260px;
+    overflow: hidden;
+    border-radius: 12px 12px 0 0;
+    background-color: #f4f4f4;
+  }
+
+  &__main-image {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    transition: transform 300ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  &__content {
+    display: flex;
+    flex: 0 0 80px;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    height: 80px;
+    padding: 15px 10px;
+    background-color: $color-white;
+  }
+
+  &__logo {
+    display: grid;
+    flex: 0 0 80px;
+    width: 80px;
+    height: 50px;
+    padding: 5px;
+    border-radius: 5px;
+    background-color: $color-white;
+    place-items: center;
+  }
+
+  &__logo-image {
+    display: block;
+    width: auto;
+    max-width: 70px;
+    height: auto;
+    max-height: 44px;
+    object-fit: contain;
+  }
+
+  &__founders {
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: column;
+    gap: 10px;
+    justify-content: center;
+    min-width: 0;
+  }
+
+  &__eyebrow,
+  &__founder-names {
+    font-family: Geist, sans-serif;
+    text-box-edge: cap alphabetic;
+    text-box-trim: trim-both;
+  }
+
+  &__eyebrow {
+    color: #e31b23;
+    font-size: 9px;
+    font-weight: 600;
+    line-height: 18px;
+    letter-spacing: 0.9px;
+  }
+
+  &__founder-names {
+    color: #6b7280;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 20px;
+  }
+
+  &__card:hover,
+  &__card:focus-visible {
+    border-color: $color-brand-red;
+  }
+
+  &__card:hover &__main-image {
+    transform: scale(1.015);
+  }
+
+  &__card:focus-visible,
+  &__control:focus-visible,
+  &__cta:focus-visible {
+    outline: 2px solid $color-brand-red;
+    outline-offset: 3px;
+  }
+
+  &__actions {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    justify-content: center;
+    margin-top: -10px;
+  }
+
+  &__control[hidden] {
+    display: none;
+  }
+
+  &__control {
+    display: grid;
+    width: 36px;
+    height: 36px;
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    background-color: $color-white;
+    cursor: pointer;
+    place-items: center;
+    transition: background-color 180ms ease;
+  }
+
+  &__control img {
+    display: block;
+    width: 8px;
+    max-width: none;
+    height: 14px;
+  }
+
+  &__control--previous img {
+    transform: rotate(180deg);
+  }
+
+  &__control:disabled {
+    opacity: 0.4;
+    cursor: default;
+  }
+
+  &__control:hover:not(:disabled) {
+    background-color: #f7f7f7;
+  }
+
+  &__cta {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 158px;
+    height: 40px;
+    padding: 15px 20px;
+    border: 1px solid rgba($color-brand-red, 0.9);
+    border-radius: 22px;
+    background-color: $color-white;
+    color: #e31b23;
+    font-family: Inter, sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 48px;
+    text-align: center;
+    text-box-edge: cap alphabetic;
+    text-box-trim: trim-both;
+    white-space: nowrap;
+    transition:
+      background-color 180ms ease,
+      color 180ms ease;
+  }
+
+  &__cta:hover {
+    background-color: $color-brand-red;
+    color: $color-white;
+  }
+}
+
+@media (max-width: $breakpoint-tablet) {
+  .companies-we-back {
+    &__track {
+      width: 100%;
+    }
+  }
+}
+
+@media (max-width: $breakpoint-mobile) {
+  .companies-we-back {
+    &__card {
+      flex-basis: min(340px, 100vw);
+      width: min(390px, 100vw);
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .companies-we-back {
+    &__track {
+      scroll-behavior: auto;
+    }
+
+    &__main-image {
+      transition: none;
+    }
+
+    &__card:hover &__main-image {
+      transform: none;
+    }
+  }
+}

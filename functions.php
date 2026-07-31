@@ -2,8 +2,16 @@
 
 function nuventures_assets() {
     wp_enqueue_style(
+        'nuventures-google-fonts',
+        'https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=Lora:ital,wght@0,400;0,500;1,400&display=swap',
+        [],
+        null
+    );
+
+    wp_enqueue_style(
         'nuventures-main',
-        get_template_directory_uri() . '/assets/dist/css/main.css'
+        get_template_directory_uri() . '/assets/dist/css/main.css',
+        ['nuventures-google-fonts']
     );
 
     wp_enqueue_script(

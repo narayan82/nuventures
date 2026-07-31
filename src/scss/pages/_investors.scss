@@ -1,0 +1,274 @@
+@use '../base/variables' as *;
+
+.home-investors {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 30px;
+  min-height: 495px;
+  padding: 40px 0px;
+  background-color: $color-white;
+
+  &__title {
+    width: min(870px, 100%);
+    margin: 0;
+    color: #141b34;
+    font-family: Geist, sans-serif;
+    font-size: 24px;
+    font-weight: 200;
+    line-height: 48px;
+    text-align: center;
+    text-box-edge: cap alphabetic;
+    text-box-trim: trim-both;
+  }
+
+  &__track {
+    display: flex;
+    gap: 10px;
+    width: min(1280px, 100%);
+    padding-inline: 40px;
+    padding-block: 24px;
+    overflow-x: auto;
+    overscroll-behavior-inline: contain;
+    scrollbar-width: none;
+    scroll-behavior: smooth;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  &__track::-webkit-scrollbar {
+    display: none;
+  }
+
+  &.is-carousel &__track {
+    padding-inline-start: 40px;
+    padding-inline-end: 40px;
+    scroll-padding-inline-start: 40px;
+    scroll-padding-inline-end: 40px;
+  }
+
+  &__card {
+    position: relative;
+    display: flex;
+    flex: 0 0 232px;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    width: 232px;
+    height: 338px;
+    padding: 24px 15px 15px;
+    overflow: hidden;
+    border: 1px solid $color-border;
+    border-radius: 8px;
+    background-color: #fefefe;
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+    transform:
+      perspective(900px)
+      rotateX(var(--investor-tilt-x, 0deg))
+      rotateY(var(--investor-tilt-y, 0deg))
+      scale(var(--investor-tilt-scale, 1));
+    transform-style: preserve-3d;
+    will-change: transform;
+    transition:
+      border-color 180ms ease,
+      transform 420ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  &__card.is-tilting {
+    transition:
+      border-color 180ms ease,
+      transform 90ms linear;
+  }
+
+  &__photo {
+    position: absolute;
+    z-index: 0;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 8px;
+    filter: grayscale(1);
+    object-fit: cover;
+    object-position: center bottom;
+    transition:
+      filter 240ms ease,
+      transform 300ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  &__name {
+    position: relative;
+    z-index: 1;
+    color: $color-brand-red;
+    font-family: Lora, serif;
+    font-size: 22px;
+    font-weight: 400;
+    line-height: normal;
+    text-align: center;
+    text-box-edge: cap alphabetic;
+    text-box-trim: trim-both;
+  }
+
+  &__card-arrow,
+  &__control {
+    display: grid;
+    width: 36px;
+    height: 35px;
+    padding: 0;
+    border: 1px solid rgba($color-white, 0.8);
+    border-radius: 18px;
+    background-color: #1f1f1f;
+    backdrop-filter: blur(2.5px);
+    place-items: center;
+  }
+
+  &__card-arrow {
+    position: relative;
+    z-index: 1;
+  }
+
+  &__arrow-icon {
+    position: relative;
+    display: grid;
+    width: 16px;
+    height: 16px;
+    place-items: center;
+  }
+
+  &__arrow-icon img {
+    display: block;
+    width: 12.667px;
+    max-width: none;
+    height: 12px;
+  }
+
+  &__card:hover &__photo {
+    filter: grayscale(0.75);
+    transform: scale(1.015);
+  }
+
+  &__card:hover,
+  &__card:focus-visible {
+    border-color: $color-brand-red;
+  }
+
+  &__card:focus-visible,
+  &__cta:focus-visible,
+  &__control:focus-visible {
+    outline: 2px solid $color-brand-red;
+    outline-offset: 3px;
+  }
+
+  &__actions {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    justify-content: center;
+    margin-top: -10px;
+  }
+
+  &__control[hidden] {
+    display: none;
+  }
+
+  &__control {
+    width: 36px;
+    height: 36px;
+    border: 0;
+    border-radius: 50%;
+    background-color: $color-white;
+    color: #141b34;
+    cursor: pointer;
+    backdrop-filter: none;
+    transition:
+      border-color 180ms ease,
+      background-color 180ms ease;
+  }
+
+  &__control:hover:not(:disabled) {
+    background-color: #f7f7f7;
+  }
+
+  &__control--previous &__arrow-icon {
+    transform: rotate(180deg);
+  }
+
+  &__control:disabled {
+    opacity: 0.4;
+    cursor: default;
+  }
+
+  &__control &__arrow-icon img {
+    width: 8px;
+    height: 14px;
+  }
+
+  &__cta {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 156px;
+    height: 40px;
+    padding: 15px 20px;
+    border: 1px solid rgba($color-brand-red, 0.9);
+    border-radius: 22px;
+    background-color: $color-white;
+    color: #e31b23;
+    font-family: Inter, sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 48px;
+    text-align: center;
+    text-box-edge: cap alphabetic;
+    text-box-trim: trim-both;
+    white-space: nowrap;
+    transition:
+      background-color 180ms ease,
+      color 180ms ease;
+  }
+
+  &__cta:hover {
+    background-color: $color-brand-red;
+    color: $color-white;
+  }
+}
+
+@media (max-width: $breakpoint-tablet) {
+  .home-investors {
+    padding-inline: 0;
+
+    &__track {
+      width: 100%;
+    }
+  }
+}
+
+@media (max-width: $breakpoint-mobile) {
+  .home-investors {
+    padding-inline: 0;
+
+    &__card {
+      flex-basis: calc(100vw - 64px);
+      width: calc(100vw - 64px);
+      max-width: 300px;
+      height: 400px;
+      aspect-ratio: 1;
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .home-investors {
+    &__track {
+      scroll-behavior: auto;
+    }
+
+    &__photo {
+      transition: none;
+    }
+
+    &__card:hover &__photo {
+      transform: none;
+    }
+  }
+}

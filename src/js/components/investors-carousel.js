@@ -1,0 +1,64 @@
+const EDGE_TOLERANCE = 2;
+
+export function initInvestorsCarousels() {
+  document.querySelectorAll('[data-investors-carousel]').forEach((carousel) => {
+    const track = carousel.querySelector('[data-investors-track]');
+    const controls = carousel.querySelector('[data-investors-controls]');
+    const previousButton = carousel.querySelector('[data-investors-previous]');
+    const nextButton = carousel.querySelector('[data-investors-next]');
+
+    if (!track || !controls || !previousButton || !nextButton) {
+      return;
+    }
+
+    const getScrollStep = () => {
+      const firstCard = track.firstElementChild;
+
+      if (!firstCard) {
+        return 0;
+      }
+
+      const styles = window.getComputedStyle(track);
+      const gap = parseFloat(styles.columnGap || styles.gap) || 0;
+
+      return firstCard.getBoundingClientRect().width + gap;
+    };
+
+    const updateState = () => {
+      const isOverflowing = track.scrollWidth > track.clientWidth + EDGE_TOLERANCE;
+      const maximumScroll = Math.max(0, track.scrollWidth - track.clientWidth);
+
+      carousel.classList.toggle('is-carousel', isOverflowing);
+      controls.classList.toggle('has-controls', isOverflowing);
+      previousButton.hidden = !isOverflowing;
+      nextButton.hidden = !isOverflowing;
+      previousButton.disabled = !isOverflowing || track.scrollLeft <= EDGE_TOLERANCE;
+      nextButton.disabled = !isOverflowing || track.scrollLeft >= maximumScroll - EDGE_TOLERANCE;
+    };
+
+    const move = (direction) => {
+      const scrollStep = getScrollStep();
+
+      if (!scrollStep) {
+        return;
+      }
+
+      track.scrollBy({
+        left: direction * scrollStep,
+        behavior: 'smooth',
+      });
+    };
+
+    previousButton.addEventListener('click', () => move(-1));
+    nextButton.addEventListener('click', () => move(1));
+    track.addEventListener('scroll', updateState, { passive: true });
+    window.addEventListener('resize', updateState);
+
+    if ('ResizeObserver' in window) {
+      const resizeObserver = new ResizeObserver(updateState);
+      resizeObserver.observe(track);
+    }
+
+    updateState();
+  });
+}

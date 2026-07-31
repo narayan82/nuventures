@@ -3,8 +3,20 @@
 @use 'base/typography';
 @use 'base/global';
 
+@use 'components/slide-menu';
+
 @use 'layout/container';
 @use 'layout/header';
 @use 'layout/footer';
 
+@use 'pages/hero-intro';
+@use 'pages/stats';
+@use 'pages/investors';
+@use 'pages/companies-we-back';
+@use 'pages/more-than-capital';
+@use 'pages/podcast-quotes';
+@use 'pages/space-field';
+@use 'pages/latest-updates';
+@use 'pages/portfolio';
+@use 'pages/nu-journey';
 @use 'pages/home';
