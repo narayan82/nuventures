@@ -46,8 +46,10 @@ $resolve_image = static function ($image, $fallback_alt) {
 ?>
 
 <section class="companies-we-back" data-companies-carousel aria-labelledby="companies-we-back-title">
-    <h2 class="companies-we-back__title" id="companies-we-back-title"><?php esc_html_e('Companies we back', 'nuventures'); ?></h2>
-
+    <h2 class="companies-we-back__title" id="companies-we-back-title"><?php esc_html_e('Nu Journeys with our Bold Founders', 'nuventures'); ?></h2>
+     <p class="podcast-quotes__supporting">
+                <?php esc_html_e('Explore the  stages as Brands go from an Idea to reality', 'nuventures'); ?>
+            </p>
     <div class="companies-we-back__track" data-companies-track>
         <?php foreach ($companies_query->posts as $company_post) : ?>
             <?php

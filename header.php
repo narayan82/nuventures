@@ -56,8 +56,13 @@
             >
         </a>
 
-        <?php // TODO: Replace the placeholder CTA URL when the pitch destination is provided. ?>
-        <a class="site-header__cta" href="#" aria-label="<?php esc_attr_e('Pitch your Idea', 'nuventures'); ?>">
+        <a
+            class="site-header__cta"
+            href="<?php echo esc_url(home_url('/pitch/')); ?>"
+            aria-label="<?php esc_attr_e('Pitch your Idea', 'nuventures'); ?>"
+            aria-haspopup="dialog"
+            data-pitch-trigger
+        >
             <img
                 src="<?php echo esc_url(get_template_directory_uri() . '/assets/images/header/rocket.svg'); ?>"
                 alt=""
@@ -70,3 +75,4 @@
 </header>
 
 <?php get_template_part('template-parts/components/slide-menu'); ?>
+<?php get_template_part('template-parts/components/pitch-flow', null, array('embedded' => true)); ?>

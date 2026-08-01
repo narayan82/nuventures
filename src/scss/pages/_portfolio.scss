@@ -50,10 +50,10 @@
 
   &__card {
     display: flex;
-    flex: 0 0 550px;
+    flex: 0 0 650px;
     align-items: center;
     width: 550px;
-    height: 280px;
+    height: 350px;
     overflow: hidden;
     border-radius: 12px;
     background-color: #f3f3f3;
@@ -63,9 +63,9 @@
 
   &__media {
     display: block;
-    flex: 0 0 250px;
-    width: 250px;
-    height: 280px;
+    flex: 0 0 350px;
+    width: 350px;
+    height: 100%;
     overflow: hidden;
     border-radius: 10px 0 0 10px;
     background-color: #ededed;

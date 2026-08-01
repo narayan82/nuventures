@@ -1,5 +1,7 @@
 <?php
 
+require_once get_template_directory() . '/inc/pitch-api.php';
+
 function nuventures_assets() {
     wp_enqueue_style(
         'nuventures-google-fonts',
@@ -22,5 +24,17 @@ function nuventures_assets() {
         true
     );
 }
+
+function nuventures_setup() {
+    add_theme_support('title-tag');
+    add_theme_support('post-thumbnails');
+
+    register_nav_menus([
+        'primary' => __('Primary Menu', 'nuventures'),
+        'footer'  => __('Footer Menu', 'nuventures'),
+    ]);
+}
+
+add_action('after_setup_theme', 'nuventures_setup');
 
 add_action('wp_enqueue_scripts', 'nuventures_assets');

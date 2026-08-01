@@ -4,7 +4,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 30px;
+  gap: 20px;
   min-height: 437px;
   padding: 20px 0;
   background-color: $color-white;
@@ -50,7 +50,7 @@
     flex: 0 0 390px;
     flex-direction: column;
     width: 390px;
-    height: 340px;
+    height: 390px;
     overflow: hidden;
     border: 1px solid $color-border;
     border-radius: 12px;
@@ -63,7 +63,7 @@
   &__media {
     position: relative;
     display: block;
-    flex: 0 0 260px;
+    flex: 0 0 290px;
     width: 100%;
     height: 260px;
     overflow: hidden;
@@ -82,7 +82,7 @@
 
   &__content {
     display: flex;
-    flex: 0 0 80px;
+    flex: 0 0 100px;
     align-items: center;
     gap: 10px;
     width: 100%;
@@ -129,7 +129,7 @@
 
   &__eyebrow {
     color: #e31b23;
-    font-size: 9px;
+    font-size: 12px;
     font-weight: 600;
     line-height: 18px;
     letter-spacing: 0.9px;

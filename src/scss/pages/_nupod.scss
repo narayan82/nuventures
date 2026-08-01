@@ -1,0 +1,269 @@
+@use '../base/variables' as *;
+
+.nupod-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 40px;
+  background-color: $color-white;
+}
+
+.nupod-intro {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: center;
+  width: min(870px, calc(100% - 40px));
+  text-align: center;
+
+  &__icon {
+    display: block;
+    width: 64px;
+    height: 64px;
+    object-fit: cover;
+  }
+
+  &__title,
+  &__description {
+    width: 100%;
+    margin: 0;
+  }
+
+  &__title {
+    color: #141b34;
+    font-family: Geist, sans-serif;
+    font-size: 24px;
+    font-weight: 200;
+    line-height: 48px;
+  }
+
+  &__description {
+    color: $color-black;
+    font-family: Geist, sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 24px;
+  }
+}
+
+.nupod-list {
+  width: min(1200px, calc(100% - 40px));
+  padding: 0 0 40px;
+  margin: 40px auto 0;
+
+  &__toolbar {
+    justify-content: center;
+    margin-bottom: 40px;
+  }
+
+  &__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(550px, 100%), 1fr));
+    gap: 20px;
+  }
+
+  &__empty {
+    margin: 40px 0 0;
+    color: #6b7280;
+    font-family: Geist, sans-serif;
+    font-size: 16px;
+    line-height: 24px;
+    text-align: center;
+  }
+
+  &__empty[hidden] {
+    display: none;
+  }
+}
+
+.nupod-card {
+  display: grid;
+  grid-template-columns: 210px minmax(0, 380px);
+  min-width: 0;
+  overflow: hidden;
+  border-radius: 12px;
+  background-color: #f3f3f3;
+
+  &[hidden] {
+    display: none;
+  }
+
+  &--no-image {
+    grid-template-columns: 1fr;
+  }
+
+  &__media {
+    position: relative;
+    min-width: 0;
+    min-height: 306px;
+    overflow: hidden;
+    border-radius: 12px 0 0 12px;
+  }
+
+  &__image {
+    position: absolute;
+    inset: 0;
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 300ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  &:hover &__image {
+    transform: scale(1.02);
+  }
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    min-width: 0;
+    min-height: 306px;
+    padding: 20px;
+  }
+
+  &__date {
+    color: #070707;
+    font-family: Inter, sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: normal;
+  }
+
+  &__title {
+    width: 100%;
+    margin: 0;
+    color: #070707;
+    font-family: Lora, serif;
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 28px;
+  }
+
+  &__description {
+    color: #070707;
+    font-family: Geist, sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 20px;
+  }
+
+  &__description p {
+    margin: 0;
+  }
+
+  &__actions {
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+    width: 100%;
+    margin-top: auto;
+  }
+
+  &__cta {
+    display: flex;
+    flex: 1 1 0;
+    gap: 5px;
+    align-items: center;
+    justify-content: center;
+    min-width: 0;
+    height: 46px;
+    padding: 15px 12px;
+    border-radius: 22px;
+    background-color: $color-brand-red;
+    color: $color-white;
+    font-family: Inter, sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1;
+    white-space: nowrap;
+    transition:
+      background-color 180ms ease,
+      box-shadow 180ms ease,
+      transform 180ms ease;
+  }
+
+  &__cta:hover {
+    background-color: #b80008;
+    box-shadow: 0 6px 16px rgba($color-brand-red, 0.2);
+    transform: translateY(-2px);
+  }
+
+  &__cta:focus-visible {
+    outline: 2px solid $color-brand-red;
+    outline-offset: 3px;
+  }
+
+  &__cta img {
+    flex: 0 0 16px;
+    width: 16px;
+    max-width: none;
+    height: 16px;
+  }
+}
+
+@media (max-width: $breakpoint-tablet) {
+  .nupod-list {
+    &__grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .nupod-card {
+    grid-template-columns: 210px minmax(0, 1fr);
+  }
+}
+
+@media (max-width: $breakpoint-mobile) {
+  .nupod-page {
+    padding-top: 32px;
+  }
+
+  .nupod-list {
+    &__toolbar {
+      flex-direction: column;
+    }
+
+    &__toolbar .portfolio-companies__filter,
+    &__toolbar .portfolio-companies__sort {
+      flex: none;
+      width: 100%;
+    }
+  }
+
+  .nupod-card {
+    grid-template-columns: 1fr;
+
+    &__media {
+      min-height: 300px;
+      border-radius: 12px 12px 0 0;
+    }
+
+    &__content {
+      min-height: 0;
+      padding: 24px 20px;
+    }
+
+    &__actions {
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    &__cta {
+      flex: none;
+      width: 100%;
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nupod-card__image,
+  .nupod-card__cta {
+    transition: none;
+  }
+
+  .nupod-card__cta:hover {
+    transform: none;
+  }
+}

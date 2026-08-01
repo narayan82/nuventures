@@ -43,16 +43,15 @@
                 <span><?php esc_html_e('Our Portfolio', 'nuventures'); ?></span>
             </a>
 
-            <?php // TODO: Replace the remaining placeholder page URLs when the final slugs are provided. ?>
-            <a class="slide-menu__link" href="#">
+            <a class="slide-menu__link" href="<?php echo esc_url(home_url('/about/')); ?>">
                 <img src="<?php echo esc_url(get_template_directory_uri() . '/assets/images/menu/about.svg'); ?>" alt="" width="24" height="24">
                 <span><?php esc_html_e('About Us', 'nuventures'); ?></span>
             </a>
-            <a class="slide-menu__link" href="#">
+            <a class="slide-menu__link" href="<?php echo esc_url(home_url('/initiatives/')); ?>">
                 <img src="<?php echo esc_url(get_template_directory_uri() . '/assets/images/menu/initiatives.svg'); ?>" alt="" width="24" height="24">
                 <span><?php esc_html_e('Our Initiatives', 'nuventures'); ?></span>
             </a>
-            <a class="slide-menu__link" href="#">
+            <a class="slide-menu__link" href="<?php echo esc_url(home_url('/nupod/')); ?>">
                 <img src="<?php echo esc_url(get_template_directory_uri() . '/assets/images/menu/nupod.svg'); ?>" alt="" width="24" height="24">
                 <span><?php esc_html_e('NuPOD', 'nuventures'); ?></span>
             </a>

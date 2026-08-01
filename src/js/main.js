@@ -12,6 +12,11 @@ import { initLatestUpdatesCarousels } from './components/latest-updates-carousel
 import { initPortfolioCarousels } from './components/portfolio-carousel.js';
 import { initPortfolioFilters } from './components/portfolio-filter.js';
 import { initNuJourneyTimelines } from './components/nu-journey-timeline.js';
+import { initAboutTeamSort } from './components/about-team-filter.js';
+import { initInitiativesFilter } from './components/initiatives-filter.js';
+import { initNupodFilter } from './components/nupod-filter.js';
+import { initPitchFlow } from './components/pitch-flow.js';
+import { initPitchVoiceInput } from './components/pitch-voice-input.js';
 
 initSlideMenu();
 initStickyHeader();
@@ -27,3 +32,8 @@ initLatestUpdatesCarousels();
 initPortfolioCarousels();
 initPortfolioFilters();
 initNuJourneyTimelines();
+initAboutTeamSort();
+initInitiativesFilter();
+initNupodFilter();
+initPitchFlow();
+initPitchVoiceInput();
