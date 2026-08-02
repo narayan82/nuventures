@@ -163,7 +163,7 @@ $asset_path    = get_template_directory_uri() . '/assets/images/nu-journey/';
                         data-month-span="<?php echo esc_attr((((($entry['end_year'] * 12) + $entry['end_month']) - (($entry['year'] * 12) + $entry['month'])) + 1)); ?>"
                     >
                         <button
-                            class="nu-journey-timeline__trigger"
+                            class="nu-journey-timeline__trigger<?php echo (!empty($entry['image']['id']) || !empty($entry['image']['url'])) ? ' nu-journey-timeline__trigger--has-image' : ''; ?>"
                             type="button"
                             data-timeline-dialog-trigger
                             data-entry-index="<?php echo esc_attr($entry_index); ?>"

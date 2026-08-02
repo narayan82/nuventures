@@ -1,5 +1,4 @@
 const CLOSE_DURATION = 360;
-const FILE_SUCCESS_DURATION = 900;
 const TOTAL_STEPS = 6;
 const PROGRESS_DOTS = 5;
 const STEP_TO_PROGRESS = [1, 2, 2, 3, 4, 5];
@@ -55,10 +54,13 @@ export function initPitchFlow() {
     const manualIntroNotes = [...flow.querySelectorAll('[data-pitch-manual-intro-note]')];
     const fileInput = flow.querySelector('[data-pitch-file]');
     const fileLabel = flow.querySelector('[data-pitch-file-label]');
+    const analysisScreen = flow.querySelector('[data-pitch-analysis-screen]');
+    const analysisCancelButton = flow.querySelector('[data-pitch-analysis-cancel]');
     const summaryName = flow.querySelector('[data-pitch-summary-name]');
     const summaryForm = flow.querySelector('[data-pitch-summary-form]');
     const summaryItems = [...flow.querySelectorAll('[data-pitch-summary-item]')];
     const thanksName = flow.querySelector('[data-pitch-thanks-name]');
+    const confettiLayer = flow.querySelector('[data-pitch-confetti]');
     const isEmbedded = flow.hasAttribute('data-pitch-embedded');
     const triggers = isEmbedded ? [...document.querySelectorAll('[data-pitch-trigger]')] : [];
     const state = {
@@ -77,13 +79,58 @@ export function initPitchFlow() {
     let activeManualQuestions = [];
     let manualEntryActive = false;
     let analysisInProgress = false;
+    let analysisController = null;
+    let analysisCancelled = false;
     let returnFocus = null;
     let lockedScrollY = 0;
     let focusScrollTimer = 0;
+    let confettiTimer = 0;
 
     if (!panel || !backButton || !steps.length) {
       return;
     }
+
+    const stopConfetti = () => {
+      window.clearTimeout(confettiTimer);
+      confettiLayer?.replaceChildren();
+    };
+
+    const startConfetti = () => {
+      stopConfetti();
+
+      if (reducedMotion || !confettiLayer) {
+        return;
+      }
+
+      const colors = ['#da0009', '#f6c945', '#141b34', '#ef6b73', '#ffffff'];
+      const fragment = document.createDocumentFragment();
+
+      for (let index = 0; index < 72; index += 1) {
+        const piece = document.createElement('span');
+        const size = 6 + Math.random() * 7;
+
+        piece.className = 'pitch-flow__confetti-piece';
+        piece.style.setProperty('--confetti-x', `${Math.random() * 100}%`);
+        piece.style.setProperty('--confetti-drift', `${-70 + Math.random() * 140}px`);
+        piece.style.setProperty('--confetti-delay', `${Math.random() * 1.4}s`);
+        piece.style.setProperty('--confetti-duration', `${5.2 + Math.random() * 2.8}s`);
+        piece.style.setProperty('--confetti-color', colors[index % colors.length]);
+        piece.style.setProperty('--confetti-width', `${size}px`);
+        piece.style.setProperty('--confetti-height', `${size * (0.45 + Math.random() * 0.7)}px`);
+        piece.style.setProperty('--confetti-rotation', `${Math.random() * 360}deg`);
+        fragment.append(piece);
+      }
+
+      confettiLayer.append(fragment);
+      confettiTimer = window.setTimeout(() => {
+        confettiLayer.replaceChildren();
+        confettiTimer = window.setTimeout(() => {
+          if (currentStep === 6) {
+            startConfetti();
+          }
+        }, 2000);
+      }, 9600);
+    };
 
     const syncVisualViewportHeight = () => {
       const viewportHeight = window.visualViewport?.height || window.innerHeight;
@@ -121,6 +168,12 @@ export function initPitchFlow() {
 
       if (status) {
         status.textContent = `Step ${currentStep} of ${TOTAL_STEPS}`;
+      }
+
+      if (currentStep === 6) {
+        startConfetti();
+      } else {
+        stopConfetti();
       }
 
       const activeStep = steps.find((step) => Number(step.dataset.pitchStep) === currentStep);
@@ -279,12 +332,33 @@ export function initPitchFlow() {
       if (manualButton) {
         manualButton.disabled = active;
       }
+      uploadChoices.forEach((choice) => {
+        choice.hidden = active;
+      });
+      if (analysisScreen) {
+        analysisScreen.hidden = !active;
+      }
+      flow.classList.toggle('is-analysis', active);
       uploadStep?.setAttribute('aria-busy', active ? 'true' : 'false');
       fileControl?.classList.toggle('is-analysing', active);
 
       if (fileLabel && message) {
         fileLabel.textContent = message;
       }
+    };
+
+    const cancelAnalysis = () => {
+      if (!analysisInProgress) {
+        return;
+      }
+
+      analysisCancelled = true;
+      analysisController?.abort();
+      setAnalysisState(false, 'Select File');
+      state.pitchDeck = null;
+      state.entryMethod = '';
+      fileInput.value = '';
+      showError(fileInput.closest('form'));
     };
 
     const analysePitchDeck = async (selectedFile, form) => {
@@ -300,6 +374,8 @@ export function initPitchFlow() {
       }
 
       const controller = new AbortController();
+      analysisController = controller;
+      analysisCancelled = false;
       const timeout = window.setTimeout(() => controller.abort(), PITCH_ANALYSIS_TIMEOUT);
       const formData = new FormData();
       formData.append('pitch_deck', selectedFile, selectedFile.name);
@@ -328,23 +404,26 @@ export function initPitchFlow() {
 
         state.extraction = { ...result };
         mergeExtractedAnswers(result);
-        setAnalysisState(false, 'Success! Deck analysed');
-        showError(form, `${selectedFile.name} was analysed successfully.`, true);
 
         if (result.complete) {
           updateSummary();
-          window.setTimeout(() => renderStep(5), reducedMotion ? 0 : FILE_SUCCESS_DURATION);
+          setAnalysisState(false, 'Success! Deck analysed');
+          showError(form, `${selectedFile.name} was analysed successfully.`, true);
+          renderStep(5);
           return;
         }
 
         const missingFormFields = result.missing_fields
           .map((apiField) => API_TO_FORM_FIELD[apiField])
           .filter(Boolean);
-        window.setTimeout(
-          () => startManualEntry(missingFormFields),
-          reducedMotion ? 0 : FILE_SUCCESS_DURATION
-        );
+        setAnalysisState(false, 'Success! Deck analysed');
+        showError(form, `${selectedFile.name} was analysed successfully.`, true);
+        startManualEntry(missingFormFields);
       } catch (error) {
+        if (analysisCancelled) {
+          return;
+        }
+
         const message = error?.name === 'AbortError'
           ? 'Pitch analysis timed out. Please try again or enter your details manually.'
           : error?.message || 'We could not analyse that deck. Please try again.';
@@ -356,6 +435,8 @@ export function initPitchFlow() {
         fileInput.value = '';
       } finally {
         window.clearTimeout(timeout);
+        analysisController = null;
+        analysisCancelled = false;
       }
     };
 
@@ -445,6 +526,10 @@ export function initPitchFlow() {
         return;
       }
 
+      if (analysisInProgress) {
+        cancelAnalysis();
+      }
+
       flow.classList.remove('is-open');
       flow.classList.add('is-closing');
 
@@ -471,6 +556,11 @@ export function initPitchFlow() {
     };
 
     backButton.addEventListener('click', () => {
+      if (analysisInProgress) {
+        cancelAnalysis();
+        return;
+      }
+
       if (currentStep === 4 && manualEntryActive) {
         if (currentManualQuestion > 0) {
           showManualQuestion(currentManualQuestion - 1);
@@ -559,6 +649,8 @@ export function initPitchFlow() {
     manualButton?.addEventListener('click', () => {
       startManualEntry();
     });
+
+    analysisCancelButton?.addEventListener('click', cancelAnalysis);
 
     manualQuestions.forEach((question) => {
       const input = question.querySelector('input');

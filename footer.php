@@ -61,6 +61,8 @@ $footer_asset_path = get_template_directory_uri() . '/assets/images/footer/';
     </div>
 </footer>
 
+<?php get_template_part('template-parts/global/cookie-consent'); ?>
+
 <?php wp_footer(); ?>
 
 </body>

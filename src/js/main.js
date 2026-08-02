@@ -17,6 +17,7 @@ import { initInitiativesFilter } from './components/initiatives-filter.js';
 import { initNupodFilter } from './components/nupod-filter.js';
 import { initPitchFlow } from './components/pitch-flow.js';
 import { initPitchVoiceInput } from './components/pitch-voice-input.js';
+import { initCookieConsent } from './components/cookie-consent.js';
 
 initSlideMenu();
 initStickyHeader();
@@ -37,3 +38,4 @@ initInitiativesFilter();
 initNupodFilter();
 initPitchFlow();
 initPitchVoiceInput();
+initCookieConsent();

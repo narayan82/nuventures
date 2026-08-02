@@ -1,6 +1,7 @@
 <?php
 
 require_once get_template_directory() . '/inc/pitch-api.php';
+require_once get_template_directory() . '/inc/person-helpers.php';
 
 function nuventures_assets() {
     wp_enqueue_style(

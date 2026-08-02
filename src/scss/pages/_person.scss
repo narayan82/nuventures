@@ -1,0 +1,395 @@
+@use '../base/variables' as *;
+
+.person-page {
+  padding: 72px 40px 120px;
+  color: #111827;
+}
+
+.person-page__layout {
+  display: grid;
+  grid-template-columns: 260px minmax(0, 700px);
+  gap: 64px;
+  justify-content: center;
+  align-items: start;
+}
+
+.person-profile {
+  position: static;
+}
+
+.person-profile__photo {
+  width: 260px;
+  height: 280px;
+  overflow: hidden;
+  border: 1px solid $color-border;
+  border-radius: 16px;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+}
+
+.person-profile h1 {
+  margin: 20px 0 4px;
+  color: $color-brand-red;
+  font: 400 24px/1.2 'Lora', serif;
+}
+
+.person-profile__designation {
+  margin: 0;
+  color: #111827;
+  font: 500 16px/1.5 'Geist', sans-serif;
+}
+
+.person-profile__socials {
+  display: flex;
+  gap: 15px;
+  margin: 18px 0;
+  padding: 0;
+  list-style: none;
+
+  a {
+    display: grid;
+    width: 32px;
+    height: 32px;
+    place-items: center;
+    border-radius: 50%;
+    transition: opacity 180ms ease, background-color 180ms ease;
+
+    &:hover {
+      background: #f3f3f3;
+    }
+  }
+}
+
+.person-profile__pitch {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 0 22px;
+  border-radius: 22px;
+  background: $color-brand-red;
+  color: #fff;
+  font: 500 14px/1 'Geist', sans-serif;
+  text-decoration: none;
+}
+
+.person-page__content {
+  display: grid;
+  gap: 40px;
+}
+
+.person-points {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 30px;
+}
+
+.person-point {
+  display: grid;
+  min-width: 0;
+  align-content: start;
+  gap: 25px;
+}
+
+.person-point__eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 24px;
+  color: #111;
+  font: 400 14px/24px 'Geist', sans-serif;
+  white-space: nowrap;
+
+  span {
+    display: grid;
+    width: 21px;
+    height: 21px;
+    flex: 0 0 auto;
+    place-items: center;
+    border-radius: 50%;
+    background: #eee;
+    color: #6b7280;
+    font-size: 10px;
+  }
+}
+
+.person-point h2 {
+  margin: 0;
+  color: $color-brand-red;
+  font: 400 24px/1.2 'Lora', serif;
+}
+
+.person-point__description {
+  color: #6b7280;
+  font: 400 16px/1.5 'Geist', sans-serif;
+
+  p {
+    margin: 0;
+  }
+}
+
+.person-point__connector {
+  display: block;
+  height: 7.364px;
+  flex: 0 0 auto;
+}
+
+.person-point__connector--1 {
+  width: 70.833px;
+}
+
+.person-point__connector--2 {
+  width: 31.833px;
+}
+
+.person-testimonial {
+  padding: 20px;
+  border-radius: 20px 20px 20px 0;
+  background: #6b7280;
+  color: #fff;
+}
+
+.person-testimonial blockquote {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin: 0;
+  font: 400 20px/1.5 'Lora', serif;
+
+  > div {
+    min-width: 0;
+  }
+
+  p {
+    margin: 0;
+  }
+}
+
+.person-testimonial__quote-icon {
+  display: block;
+  flex: 0 0 24px;
+  margin-top: 5px;
+  filter: brightness(0) invert(1);
+  transform: scaleX(-1);
+}
+
+.person-testimonial__attribution {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 18px;
+
+  > img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+
+  div {
+    display: grid;
+  }
+
+  strong {
+    font: 700 16px/1.3 'Geist', sans-serif;
+  }
+
+  span,
+  a {
+    color: #fff;
+    font: 400 12px/1.4 'Geist', sans-serif;
+  }
+}
+
+.person-interests h2,
+.person-related > h2,
+.person-related__heading h2 {
+  margin: 0;
+  font: 300 24px/2 'Geist', sans-serif;
+}
+
+.person-interests ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 16px 0 0;
+  padding: 0;
+  list-style: none;
+
+  li {
+    padding: 10px 14px;
+    border-radius: 26px;
+    background: #f3f3f3;
+    font: 400 16px/1.5 'Geist', sans-serif;
+  }
+}
+
+.person-related__heading {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 18px;
+}
+
+.person-related--articles > h2 {
+  margin-bottom: 18px;
+}
+
+.person-related__grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.person-related-card {
+  display: flex;
+  min-height: 250px;
+  flex-direction: column;
+  padding: 15px;
+  gap:10px;
+  border-radius: 16px;
+  background: #f3f3f3;
+
+  time {
+    color: #6b7280;
+    font: 400 12px/1.4 'Geist', sans-serif;
+  }
+
+  h3 {
+    margin: 18px 0 10px;
+    font: 500 16px/1.5 'Geist', sans-serif;
+  }
+}
+
+.person-related-card__description {
+  color: #6b7280;
+  font: 400 14px/1.45 'Geist', sans-serif;
+
+  p {
+    margin: 0;
+  }
+}
+
+.person-related-card__cta {
+  display: inline-flex;
+  min-height: 36px;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  margin-top: auto;
+  padding: 0 14px;
+  border-radius: 18px;
+  background: $color-brand-red;
+  color: #fff;
+  font: 500 13px/1 'Geist', sans-serif;
+  text-decoration: none;
+
+  img {
+    filter: brightness(0) invert(1);
+  }
+}
+
+.person-article-card {
+  min-height: 220px;
+  border: 1px solid transparent;
+  border-radius: 16px;
+  background: #f3f3f3;
+  transition: border-color 180ms ease;
+
+  &:hover,
+  &:focus-within {
+    border-color: $color-brand-red;
+  }
+
+  a {
+    display: flex;
+    height: 100%;
+    min-height: 220px;
+    flex-direction: column;
+    padding: 15px;
+    color: #111827;
+    text-decoration: none;
+  }
+
+  time {
+    color: #6b7280;
+    font: 400 12px/1.4 'Geist', sans-serif;
+  }
+}
+
+.person-article-card__title {
+  display: block;
+  margin-top: 18px;
+  font: 500 16px/1.5 'Geist', sans-serif;
+}
+
+.person-article-card__arrow {
+  display: block;
+  width: 24px;
+  height: 24px;
+  margin-top: auto;
+}
+
+@media (min-width: ($breakpoint-tablet + 1px)) {
+  .person-profile {
+    position: sticky;
+    top: 96px;
+  }
+}
+
+@media (max-width: $breakpoint-tablet) {
+  .person-page {
+    padding-inline: 24px;
+  }
+
+  .person-page__layout {
+    grid-template-columns: 220px minmax(0, 1fr);
+    gap: 32px;
+  }
+
+  .person-profile__photo {
+    width: 220px;
+    height: 238px;
+  }
+
+  .person-points,
+  .person-related__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .person-point__connector {
+    display: none;
+  }
+}
+
+@media (max-width: $breakpoint-mobile) {
+  .person-page {
+    padding: 32px 20px 80px;
+  }
+
+  .person-page__layout {
+    grid-template-columns: 1fr;
+    gap: 48px;
+  }
+
+  .person-profile__photo {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 260 / 280;
+  }
+
+  .person-points,
+  .person-related__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .person-related-card {
+    min-height: 260px;
+  }
+}

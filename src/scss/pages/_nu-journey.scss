@@ -366,7 +366,7 @@
     height: 32px;
     padding: 4px;
     border: 0;
-    border-radius: 50%;
+    border-radius: 0%;
     background: #e7e7e7;
     cursor: pointer;
     place-items: center;
@@ -606,8 +606,117 @@
     }
   }
 
-  .nu-journey-timeline__sticky-years {
-    top: 72px;
+  .nu-journey-timeline {
+    position: relative;
+    display: grid;
+    grid-template-columns: 74px minmax(0, 1fr);
+    width: 100%;
+    overflow: hidden;
+
+    &__sticky-years {
+      position: absolute;
+      z-index: 5;
+      top: 0;
+      left: 0;
+      width: 74px;
+      height: var(--timeline-height);
+      margin: 0;
+      overflow: visible;
+      background: transparent;
+      transform: none;
+    }
+
+    &__years {
+      width: 74px;
+      height: var(--timeline-height);
+      margin: 0;
+      transform: none;
+      will-change: auto;
+
+      span {
+        top: calc(32px + (var(--year-index) * 12 * var(--mobile-month-height, 15px)));
+        left: 0;
+        width: 64px;
+        padding-right: 10px;
+        font-size: 12px;
+        line-height: 16px;
+        text-align: right;
+        transform: translateY(-50%);
+      }
+    }
+
+    &__viewport {
+      grid-column: 1 / -1;
+      width: 100%;
+      overflow: visible;
+      background: $color-white;
+    }
+
+    &__canvas {
+      width: 100%;
+      min-width: 100%;
+      height: var(--timeline-height);
+      margin: 0;
+    }
+
+    &__grid {
+      inset: 0;
+      background-color: #f6f6f6;
+      background-image:
+        linear-gradient(
+          to right,
+          transparent 73px,
+          rgba(0, 0, 0, 0.14) 73px,
+          rgba(0, 0, 0, 0.14) 74px,
+          transparent 74px
+        ),
+        repeating-linear-gradient(
+          to bottom,
+          rgba(0, 0, 0, 0.045) 0,
+          rgba(0, 0, 0, 0.045) 1px,
+          transparent 1px,
+          transparent var(--mobile-month-height, 15px)
+        ),
+        repeating-linear-gradient(
+          to bottom,
+          rgba(0, 0, 0, 0.1) 0,
+          rgba(0, 0, 0, 0.1) 1px,
+          transparent 1px,
+          transparent calc(var(--mobile-month-height, 15px) * 12)
+        );
+      background-position: 0;
+    }
+
+    &__entry {
+      min-height: 0;
+    }
+
+    &__trigger {
+      height: 100%;
+      min-height: 0;
+    }
+
+    &__image {
+      display: block;
+      max-height: 42%;
+      aspect-ratio: auto;
+      object-fit: cover;
+    }
+
+    &__card-body {
+      min-height: 0;
+      justify-content: center;
+      padding: 12px;
+      overflow: hidden;
+    }
+
+    &.is-entry-reveal-ready .nu-journey-timeline__entry {
+      transform: translateY(24px);
+    }
+
+    &.is-entry-revealed .nu-journey-timeline__entry {
+      transform: translateY(0);
+    }
   }
 
   .nu-journey-dialog {
@@ -654,6 +763,7 @@
       height: 44px;
       padding: 10px;
       transform: translateX(-50%);
+      background:white;
     }
 
     &__nav {

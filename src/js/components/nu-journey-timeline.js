@@ -2,6 +2,12 @@ const CANVAS_GUTTER = 48;
 const CARDS_TOP = 74;
 const CANVAS_BOTTOM = 32;
 const SCROLL_STOP_DELAY = 180;
+const MOBILE_BREAKPOINT = 550;
+const MOBILE_DATE_COLUMN = 74;
+const MOBILE_COLUMN_GAP = 12;
+const MOBILE_MONTH_HEIGHT = 15;
+const MOBILE_TIMELINE_TOP = 32;
+const MOBILE_TIMELINE_BOTTOM = 32;
 
 export function initNuJourneyTimelines() {
   document.querySelectorAll('[data-nu-journey-timeline]').forEach((timeline) => {
@@ -37,8 +43,74 @@ export function initNuJourneyTimelines() {
     });
 
     const layout = () => {
+      const isMobile = window.matchMedia(`(max-width: ${MOBILE_BREAKPOINT}px)`).matches;
       const styles = getComputedStyle(canvas);
       const yearSpacing = Number.parseFloat(styles.getPropertyValue('--year-spacing')) || 105;
+
+      if (isMobile) {
+        const finalMonth = cards.reduce((latestMonth, card) => {
+          const monthIndex = Number.parseInt(card.dataset.monthIndex, 10) || 0;
+          const monthSpan = Math.max(1, Number.parseInt(card.dataset.monthSpan, 10) || 1);
+
+          return Math.max(latestMonth, monthIndex + monthSpan);
+        }, 1);
+        const naturalHeight = MOBILE_TIMELINE_TOP
+          + (finalMonth * MOBILE_MONTH_HEIGHT)
+          + MOBILE_TIMELINE_BOTTOM;
+        const mobileCardColumnWidth = Math.max(
+          0,
+          viewport.clientWidth - MOBILE_DATE_COLUMN - MOBILE_COLUMN_GAP - 20,
+        );
+        const cardWidth = mobileCardColumnWidth * 0.5;
+
+        cards.forEach((card, cardIndex) => {
+          const monthIndex = Number.parseInt(card.dataset.monthIndex, 10) || 0;
+          const monthSpan = Math.max(1, Number.parseInt(card.dataset.monthSpan, 10) || 1);
+          const columnIndex = cardIndex % 2;
+
+          card.dataset.lane = String(columnIndex);
+          card.style.left = `${
+            MOBILE_DATE_COLUMN
+            + MOBILE_COLUMN_GAP
+            + (columnIndex * cardWidth)
+          }px`;
+          card.style.top = `${MOBILE_TIMELINE_TOP + (monthIndex * MOBILE_MONTH_HEIGHT)}px`;
+          card.style.width = `${cardWidth}px`;
+          card.style.height = `${monthSpan * MOBILE_MONTH_HEIGHT}px`;
+        });
+
+        canvas.style.setProperty('--timeline-width', '100%');
+        canvas.style.setProperty('--timeline-height', `${naturalHeight}px`);
+        canvas.style.setProperty('--mobile-month-height', `${MOBILE_MONTH_HEIGHT}px`);
+        years.style.width = `${MOBILE_DATE_COLUMN}px`;
+        years.style.height = `${naturalHeight}px`;
+        years.style.marginLeft = '0';
+        years.style.transform = 'none';
+        stickyYears.style.setProperty('--timeline-height', `${naturalHeight}px`);
+        timeline.style.setProperty('--mobile-month-height', `${MOBILE_MONTH_HEIGHT}px`);
+        viewport.style.setProperty('--timeline-canvas-offset', '0px');
+        viewport.scrollLeft = 0;
+        timeline.classList.remove('nu-journey-timeline--overflowing', 'nu-journey-timeline--fits');
+        wasOverflowing = false;
+
+        if (!entriesRevealed) {
+          entriesRevealed = true;
+
+          requestAnimationFrame(() => {
+            timeline.classList.add('is-entry-revealed');
+          });
+        }
+
+        return;
+      }
+
+      years.style.height = '';
+      stickyYears.style.removeProperty('--timeline-height');
+      timeline.style.removeProperty('--mobile-month-height');
+      cards.forEach((card) => {
+        card.style.height = '';
+      });
+
       const lanes = [];
       const placedCards = [];
       let furthestCardEdge = 0;
@@ -157,6 +229,11 @@ export function initNuJourneyTimelines() {
 
     window.addEventListener('orientationchange', scheduleLayout);
     window.addEventListener('scroll', () => {
+      if (window.matchMedia(`(max-width: ${MOBILE_BREAKPOINT}px)`).matches) {
+        stickyYears.classList.remove('is-scroll-hidden');
+        return;
+      }
+
       if (!scrollFrameRequested) {
         scrollFrameRequested = true;
 

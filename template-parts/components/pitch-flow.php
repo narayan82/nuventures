@@ -75,6 +75,14 @@ $pitch_close_url   = !empty($args['close_url']) ? $args['close_url'] : home_url(
             >
                 <form class="pitch-flow__form" data-pitch-form="1" novalidate>
                     <div class="pitch-flow__intro">
+                        <img
+                            class="pitch-flow__launch-image"
+                            src="<?php echo esc_url(get_template_directory_uri() . '/assets/images/pitch/launch.jpg'); ?>"
+                            alt=""
+                            width="128"
+                            height="128"
+                            aria-hidden="true"
+                        >
                         <p class="pitch-flow__eyebrow"><?php esc_html_e('Start your Pitch', 'nuventures'); ?></p>
                         <p><?php esc_html_e('This guided conversation aims to make this process simple, conversational and effortless!', 'nuventures'); ?></p>
                     </div>
@@ -252,6 +260,24 @@ $pitch_close_url   = !empty($args['close_url']) ? $args['close_url'] : home_url(
                     <?php esc_html_e('No. Enter Manually', 'nuventures'); ?>
                 </button>
 
+                <div class="pitch-flow__analysis" data-pitch-analysis-screen hidden aria-live="polite">
+                    <div class="pitch-flow__analysis-content">
+                        <img
+                            class="pitch-flow__analysis-image"
+                            src="<?php echo esc_url(get_template_directory_uri() . '/assets/images/pitch/analysis-gear.png'); ?>"
+                            alt=""
+                            width="314"
+                            height="314"
+                        >
+                        <h2><?php esc_html_e('Uploading & Analyzing the document', 'nuventures'); ?></h2>
+                        <p><?php esc_html_e('This should take less than a minute!', 'nuventures'); ?></p>
+                    </div>
+
+                    <button class="pitch-flow__analysis-cancel" type="button" data-pitch-analysis-cancel>
+                        <?php esc_html_e('Cancel', 'nuventures'); ?>
+                    </button>
+                </div>
+
                 <div class="pitch-flow__manual-wizard" data-pitch-manual-wizard hidden>
                     <?php
                     $manual_questions = array(
@@ -428,9 +454,15 @@ $pitch_close_url   = !empty($args['close_url']) ? $args['close_url'] : home_url(
             </section>
 
             <section class="pitch-flow__step pitch-flow__step--thanks" data-pitch-step="6" aria-hidden="true" hidden>
+                <div class="pitch-flow__confetti" data-pitch-confetti aria-hidden="true"></div>
                 <div class="pitch-flow__thanks">
                     <span class="pitch-flow__success-icon" aria-hidden="true">
-                        <img src="<?php echo esc_url(get_template_directory_uri() . '/assets/images/pitch/check.svg'); ?>" alt="" width="28" height="28">
+                        <img
+                            src="<?php echo esc_url(get_template_directory_uri() . '/assets/images/pitch/check_completed.jpg'); ?>"
+                            alt=""
+                            width="250"
+                            height="250"
+                        >
                     </span>
                     <h2><span data-pitch-thanks-name>Thank you</span>, <?php esc_html_e('Thank you for submitting!', 'nuventures'); ?></h2>
                     <div class="pitch-flow__thanks-copy">
