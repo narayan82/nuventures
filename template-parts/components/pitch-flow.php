@@ -251,14 +251,15 @@ $pitch_close_url   = !empty($args['close_url']) ? $args['close_url'] : home_url(
                             accept=".pdf,application/pdf"
                             data-pitch-file
                         >
-                        <span data-pitch-file-label><?php esc_html_e('Select File', 'nuventures'); ?></span>
+                        <span data-pitch-file-label><?php esc_html_e('Upload a File', 'nuventures'); ?></span>
                     </label>
-                    <p class="pitch-flow__error" data-pitch-error aria-live="polite"></p>
-                </form>
 
-                <button class="pitch-flow__manual" type="button" data-pitch-manual data-pitch-upload-choice>
-                    <?php esc_html_e('No. Enter Manually', 'nuventures'); ?>
-                </button>
+                    <p class="pitch-flow__error" data-pitch-error aria-live="polite"></p>
+
+                    <button class="pitch-flow__manual" type="button" data-pitch-manual>
+                        <?php esc_html_e('No. Enter Manually', 'nuventures'); ?>
+                    </button>
+                </form>
 
                 <div class="pitch-flow__analysis" data-pitch-analysis-screen hidden aria-live="polite">
                     <div class="pitch-flow__analysis-content">

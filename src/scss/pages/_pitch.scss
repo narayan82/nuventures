@@ -377,6 +377,11 @@
     opacity: 0.35;
   }
 
+  &__step--deck {
+    justify-content: center;
+    padding-block: 20px;
+  }
+
   &__step--deck &__form {
     gap: 40px;
   }
@@ -444,11 +449,6 @@
   }
 
   &__manual {
-    position: absolute;
-    right: 40px;
-    bottom: 20px;
-    left: 40px;
-    width: auto;
     background-color: $color-white;
     color: $color-brand-red;
   }
@@ -1068,7 +1068,9 @@
       &__step[data-pitch-step='2'] input:focus,
       &__step[data-pitch-step='3'] input:focus
     ) &__step.is-active &__voice {
-      display: none;
+      visibility: hidden;
+      opacity: 0;
+      pointer-events: none;
     }
   }
 

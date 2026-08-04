@@ -45,6 +45,7 @@ export function initPitchFlow() {
     const status = flow.querySelector('.pitch-flow__status');
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const forms = [...flow.querySelectorAll('[data-pitch-form]')];
+    const sendButtons = [...flow.querySelectorAll('.pitch-flow__send')];
     const nameOutputs = [...flow.querySelectorAll('[data-pitch-name]')];
     const manualButton = flow.querySelector('[data-pitch-manual]');
     const uploadChoices = [...flow.querySelectorAll('[data-pitch-upload-choice]')];
@@ -354,7 +355,7 @@ export function initPitchFlow() {
 
       analysisCancelled = true;
       analysisController?.abort();
-      setAnalysisState(false, 'Select File');
+      setAnalysisState(false, 'Upload a File');
       state.pitchDeck = null;
       state.entryMethod = '';
       fileInput.value = '';
@@ -428,7 +429,7 @@ export function initPitchFlow() {
           ? 'Pitch analysis timed out. Please try again or enter your details manually.'
           : error?.message || 'We could not analyse that deck. Please try again.';
 
-        setAnalysisState(false, 'Select File');
+        setAnalysisState(false, 'Upload a File');
         showError(form, message);
         state.pitchDeck = null;
         state.entryMethod = '';
@@ -600,6 +601,19 @@ export function initPitchFlow() {
       }
     });
 
+    sendButtons.forEach((button) => {
+      button.addEventListener('touchend', (event) => {
+        const form = button.closest('form');
+
+        if (!form || button.disabled) {
+          return;
+        }
+
+        event.preventDefault();
+        form.requestSubmit(button);
+      }, { passive: false });
+    });
+
     fileInput?.addEventListener('change', () => {
       if (analysisInProgress) {
         return;
@@ -612,7 +626,7 @@ export function initPitchFlow() {
         state.pitchDeck = null;
         state.entryMethod = '';
         if (fileLabel) {
-          fileLabel.textContent = 'Select File';
+          fileLabel.textContent = 'Upload a File';
         }
         showError(form, 'Please select a PDF pitch deck.');
         return;
