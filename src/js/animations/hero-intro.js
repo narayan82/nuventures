@@ -8,32 +8,31 @@ const SWAP_OUT_DURATION = 220;
 const SWAP_MARKER_PAUSE = 300;
 
 const initialSentence = `
-  Nu Ventures is a global team backing
-  <button class="hero-intro__marker-wrap hero-intro__detail-trigger" type="button" data-hero-detail-trigger><mark class="hero-intro__marker">bold founders</mark></button>
-  &amp; the
-  <button class="hero-intro__marker-wrap hero-intro__detail-trigger" type="button" data-hero-technologies-trigger><mark class="hero-intro__marker">technologies</mark></button>
-  shaping
-  <button class="hero-intro__marker-wrap hero-intro__detail-trigger" type="button" data-hero-future-trigger><mark class="hero-intro__marker">what comes next</mark></button>.
+  Backing
+  <button class="hero-intro__marker-wrap hero-intro__detail-trigger" type="button" data-hero-detail-trigger><mark class="hero-intro__marker">bold founders</mark>.</button> Built by
+  <button class="hero-intro__marker-wrap hero-intro__detail-trigger" type="button" data-hero-technologies-trigger><mark class="hero-intro__marker">operators</mark>.</button>
+  <button class="hero-intro__marker-wrap hero-intro__detail-trigger" type="button" data-hero-future-trigger><mark class="hero-intro__marker">Conviction</mark></button>
+  for the long term.
 `;
 
 const detailSentence = `
   <strong class="hero-intro__detail-lead">Bold founders</strong>
-  turn conviction into action, building companies around
-  <button class="hero-intro__marker-wrap hero-intro__detail-trigger" type="button" data-hero-technologies-trigger><mark class="hero-intro__marker">technologies</mark></button>
-  that can shape what comes next.
+  see what others miss drawing on an
+  <button class="hero-intro__marker-wrap hero-intro__detail-trigger" type="button" data-hero-technologies-trigger><mark class="hero-intro__marker">operator</mark></button>
+  mindset to build.
 `;
 
 const technologiesSentence = `
-  <strong class="hero-intro__detail-lead">Technologies</strong>
-  with the potential to reshape industries, redefine what’s possible, and build
-  <button class="hero-intro__marker-wrap hero-intro__detail-trigger" type="button" data-hero-future-trigger><mark class="hero-intro__marker">what comes next</mark></button>.
+  <strong class="hero-intro__detail-lead">Operator perspective</strong>
+  shaped by scaling &amp; navigating companies with
+  <button class="hero-intro__marker-wrap hero-intro__detail-trigger" type="button" data-hero-future-trigger><mark class="hero-intro__marker">conviction</mark>.</button>
 `;
 
 const futureSentence = `
-  <strong class="hero-intro__detail-lead">What comes next</strong>
-  is the future taking shape — and
-  <button class="hero-intro__marker-wrap hero-intro__detail-trigger" type="button" data-hero-reset-trigger><mark class="hero-intro__marker">NuVentures</mark></button>
-  backs the founders bold enough to build them.
+  <strong class="hero-intro__detail-lead">Conviction</strong>
+  means
+  <button class="hero-intro__marker-wrap hero-intro__detail-trigger" type="button" data-hero-reset-trigger><mark class="hero-intro__marker">backing founders</mark></button>
+  with capital and trust as they build with.
 `;
 
 export function initHeroIntro() {

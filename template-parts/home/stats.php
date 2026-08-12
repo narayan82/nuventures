@@ -8,17 +8,17 @@
 
 <section class="home-stats" data-stats aria-label="<?php esc_attr_e('NuVentures statistics', 'nuventures'); ?>">
     <ul class="home-stats__grid">
-        <li class="home-stats__item" aria-label="<?php esc_attr_e('42 Founders Backed', 'nuventures'); ?>">
-            <span class="home-stats__value" data-stat-value="42" aria-hidden="true">42</span>
-            <span class="home-stats__label"><?php esc_html_e('Founders Backed', 'nuventures'); ?></span>
+        <li class="home-stats__item" aria-label="<?php esc_attr_e('40+ Investments till date', 'nuventures'); ?>">
+            <span class="home-stats__value" data-stat-value="42" data-stat-suffix="+" aria-hidden="true">40</span>
+            <span class="home-stats__label"><?php esc_html_e('Investments till date', 'nuventures'); ?></span>
         </li>
-        <li class="home-stats__item" aria-label="<?php esc_attr_e('32 Companies Backed', 'nuventures'); ?>">
-            <span class="home-stats__value" data-stat-value="32" aria-hidden="true">32</span>
-            <span class="home-stats__label"><?php esc_html_e('Companies Backed', 'nuventures'); ?></span>
+        <li class="home-stats__item" aria-label="<?php esc_attr_e('2 Continents', 'nuventures'); ?>">
+            <span class="home-stats__value" data-stat-value="2" aria-hidden="true">2</span>
+            <span class="home-stats__label"><?php esc_html_e('Continents', 'nuventures'); ?></span>
         </li>
         <li class="home-stats__item" aria-label="<?php esc_attr_e('6 Partners', 'nuventures'); ?>">
-            <span class="home-stats__value" data-stat-value="6" aria-hidden="true">6</span>
-            <span class="home-stats__label"><?php esc_html_e('Advisors & Partners', 'nuventures'); ?></span>
+            <span class="home-stats__value" data-stat-value="4" data-stat-suffix="+" aria-hidden="true">4</span>
+            <span class="home-stats__label"><?php esc_html_e('Unicorns', 'nuventures'); ?></span>
         </li>
         <li class="home-stats__item" aria-label="<?php esc_attr_e('75M dollars Committed Capital', 'nuventures'); ?>">
             <span class="home-stats__value" data-stat-value="75" data-stat-prefix="$" data-stat-suffix="M" aria-hidden="true">$75M</span>

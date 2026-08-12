@@ -115,6 +115,12 @@ $asset_path = get_template_directory_uri() . '/assets/images/more-than-capital/'
         </div>
     </div>
 
-    <?php // TODO: Replace the placeholder URL when the pitch destination is confirmed. ?>
-    <a class="more-than-capital__cta" href="#"><?php esc_html_e('Start Your Pitch', 'nuventures'); ?></a>
+    <a
+        class="more-than-capital__cta"
+        href="<?php echo esc_url(home_url('/pitch/')); ?>"
+        aria-haspopup="dialog"
+        data-pitch-trigger
+    >
+        <?php esc_html_e('Start Your Pitch', 'nuventures'); ?>
+    </a>
 </section>

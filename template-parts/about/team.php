@@ -19,6 +19,18 @@ $people_query = new WP_Query(
     )
 );
 
+usort(
+    $people_query->posts,
+    static function ($first_person, $second_person) {
+        $first_name  = get_field('name', $first_person->ID);
+        $second_name = get_field('name', $second_person->ID);
+        $first_name  = $first_name ? $first_name : get_the_title($first_person);
+        $second_name = $second_name ? $second_name : get_the_title($second_person);
+
+        return strnatcasecmp(wp_strip_all_tags($first_name), wp_strip_all_tags($second_name));
+    }
+);
+
 $person_taxonomies = get_object_taxonomies('person', 'names');
 $partner_taxonomy  = '';
 
@@ -47,9 +59,8 @@ foreach ($person_taxonomies as $person_taxonomy) {
         <label class="about-team__sort">
             <span class="screen-reader-text"><?php esc_html_e('Sort people by name', 'nuventures'); ?></span>
             <select data-about-team-sort>
-                <option value=""><?php esc_html_e('Sort (A-Z)', 'nuventures'); ?></option>
-                <option value="az"><?php esc_html_e('A-Z', 'nuventures'); ?></option>
-                <option value="za"><?php esc_html_e('Z-A', 'nuventures'); ?></option>
+                <option value="az" selected><?php esc_html_e('Sort (A-Z)', 'nuventures'); ?></option>
+                <option value="za"><?php esc_html_e('Sort (Z-A)', 'nuventures'); ?></option>
             </select>
             <img src="<?php echo esc_url(get_template_directory_uri() . '/assets/images/portfolio/chevron-down.svg'); ?>" alt="" width="24" height="24">
         </label>

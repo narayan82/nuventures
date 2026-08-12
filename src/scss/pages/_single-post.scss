@@ -1,0 +1,150 @@
+@use '../base/variables' as *;
+
+.single-post-page {
+  padding:60px 20px;;
+  background-color: $color-white;
+
+  &__article {
+    width: min(800px, 100%);
+    margin-inline: auto;
+  }
+
+  &__header {
+    margin-bottom: 40px;
+  }
+
+  &__back {
+    display: inline-flex;
+    gap: 10px;
+    align-items: center;
+    justify-content: center;
+    min-width: 158px;
+    height: 40px;
+    margin-bottom: 60px;
+    padding: 10px 20px;
+    border: 1px solid rgba($color-brand-red, 0.9);
+    border-radius: 22px;
+    background-color: $color-white;
+    color: $color-brand-red;
+    font-family: Inter, sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1;
+    white-space: nowrap;
+    transition:
+      background-color 180ms ease,
+      color 180ms ease;
+  }
+
+  &__back img {
+    width: 8px;
+    max-width: none;
+    height: 14px;
+    transition: filter 180ms ease;
+  }
+
+  &__back:hover {
+    background-color: $color-brand-red;
+    color: $color-white;
+  }
+
+  &__back:hover img {
+    filter: brightness(0) invert(1);
+  }
+
+  &__back:focus-visible {
+    outline: 2px solid $color-brand-red;
+    outline-offset: 3px;
+  }
+
+  &__title {
+    max-width: 1000px;
+    margin: 0;
+    color: #141b34;
+    font-family: Geist, sans-serif;
+    font-size: clamp(32px, 4vw, 44px);
+    font-weight: 400;
+    line-height: 1.12;
+  }
+
+  &__content {
+    color: $color-text;
+    font-family: Geist, sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1.7;
+    & h2 {
+      font-size: 20px;
+      font-weight: 600;
+      color:black;
+      line-height: 1.7;
+    }
+  }
+
+  &__content > *:first-child {
+    margin-top: 0;
+  }
+
+  &__content > *:last-child {
+    margin-bottom: 0;
+  }
+
+  &__content img,
+  &__content video,
+  &__content iframe {
+    max-width: 100%;
+    height: auto;
+  }
+
+  &__content iframe[src*='youtube.com'],
+  &__content iframe[src*='youtube-nocookie.com'],
+  &__content iframe[src*='youtu.be'] {
+    display: block;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    border: 0;
+  }
+
+  &__content a {
+    color: $color-brand-red;
+    text-decoration: underline;
+    text-underline-offset: 0.16em;
+  }
+
+  &__content a:focus-visible {
+    outline: 2px solid $color-brand-red;
+    outline-offset: 3px;
+  }
+
+  &__content blockquote {
+    margin-inline: 0;
+    padding-left: 24px;
+    border-left: 3px solid $color-brand-red;
+  }
+}
+
+@media (max-width: $breakpoint-tablet) {
+  .single-post-page {
+    padding: 56px 24px 72px;
+  }
+}
+
+@media (max-width: $breakpoint-mobile) {
+  .single-post-page {
+    padding: 40px 20px 56px;
+
+    &__header {
+      margin-bottom: 28px;
+    }
+
+    &__title {
+      font-size: 34px;
+      line-height: 1.16;
+    }
+
+    &__content {
+      font-size: 16px;
+      line-height: 1.65;
+    }
+  }
+}

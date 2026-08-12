@@ -25,7 +25,7 @@
   &__track {
     display: flex;
     gap: 10px;
-    width: min(1280px, 100%);
+    width: min(1200px, 100%);
     padding-inline: 40px;
     padding-block: 24px;
     overflow-x: auto;
@@ -41,8 +41,8 @@
   }
 
   &.is-carousel &__track {
-    padding-inline-start: 40px;
-    padding-inline-end: 40px;
+    padding-inline-start: 20px;
+    padding-inline-end: 20px;
     scroll-padding-inline-start: 40px;
     scroll-padding-inline-end: 40px;
   }
@@ -50,12 +50,12 @@
   &__card {
     position: relative;
     display: flex;
-    flex: 0 0 232px;
+    flex: 0 0 262px;
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
     width: 232px;
-    height: 338px;
+    height: 385px;
     padding: 24px 15px 15px;
     overflow: hidden;
     border: 1px solid $color-border;

@@ -27,11 +27,11 @@ $footer_asset_path = get_template_directory_uri() . '/assets/images/footer/';
         <?php // TODO: Replace the footer navigation placeholder URLs when final routes are defined. ?>
         <nav class="site-footer__navigation" aria-label="<?php esc_attr_e('Footer navigation', 'nuventures'); ?>">
             <ul>
-                <li><a href="#"><?php esc_html_e('Home', 'nuventures'); ?></a></li>
-                <li><a href="#"><?php esc_html_e('About Us', 'nuventures'); ?></a></li>
-                <li><a href="#"><?php esc_html_e('Team', 'nuventures'); ?></a></li>
-                <li><a href="#"><?php esc_html_e('Portfolio', 'nuventures'); ?></a></li>
-                <li><a href="#"><?php esc_html_e('NuPOD', 'nuventures'); ?></a></li>
+                <li><a href="<?php echo esc_url(home_url('/')); ?>"><?php esc_html_e('Home', 'nuventures'); ?></a></li>
+                <li><a href="<?php echo esc_url(home_url('/portfolio')); ?>"><?php esc_html_e('Portfolio', 'nuventures'); ?></a></li>
+                <li><a href="<?php echo esc_url(home_url('/about')); ?>"><?php esc_html_e('About', 'nuventures'); ?></a></li>
+                <li><a href="<?php echo esc_url(home_url('/initiatives')); ?>"><?php esc_html_e('Initiatives', 'nuventures'); ?></a></li>
+                <li><a href="<?php echo esc_url(home_url('/nupod')); ?>"><?php esc_html_e('NuPOD', 'nuventures'); ?></a></li>
             </ul>
         </nav>
 

@@ -122,7 +122,7 @@ $ordered_people = $people_query->posts;
         </button>
 
         <?php // TODO: Replace the placeholder URL when the team page destination is confirmed. ?>
-        <a class="home-investors__cta" href="#"><?php esc_html_e('View the nu team', 'nuventures'); ?></a>
+        <a class="home-investors__cta" href="<?php echo esc_url(home_url('/about/')); ?>"><?php esc_html_e('View the nu team', 'nuventures'); ?></a>
 
         <button class="home-investors__control" type="button" aria-label="<?php esc_attr_e('Next investors', 'nuventures'); ?>" data-investors-next hidden>
             <span class="home-investors__arrow-icon">

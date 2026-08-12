@@ -32,16 +32,16 @@
 
             <nav class="site-header__socials" aria-label="<?php esc_attr_e('Social media', 'nuventures'); ?>">
                 <?php // TODO: Replace placeholder social URLs when the final destinations are provided. ?>
-                <a class="site-header__social-link" href="#" aria-label="<?php esc_attr_e('NuVentures on YouTube', 'nuventures'); ?>">
+                <a class="site-header__social-link" href="https://www.youtube.com/@nuventures" target="_blank" aria-label="<?php esc_attr_e('NuVentures on YouTube', 'nuventures'); ?>">
                     <img src="<?php echo esc_url(get_template_directory_uri() . '/assets/images/header/youtube.svg'); ?>" alt="" width="24" height="24">
                 </a>
-                <a class="site-header__social-link" href="#" aria-label="<?php esc_attr_e('NuVentures on X', 'nuventures'); ?>">
+                <a class="site-header__social-link" href="https://x.com/NuVentures_in" target="_blank" aria-label="<?php esc_attr_e('NuVentures on X', 'nuventures'); ?>">
                     <img src="<?php echo esc_url(get_template_directory_uri() . '/assets/images/header/x.svg'); ?>" alt="" width="24" height="24">
                 </a>
-                <a class="site-header__social-link" href="#" aria-label="<?php esc_attr_e('NuVentures on Instagram', 'nuventures'); ?>">
+                <a class="site-header__social-link" href="https://www.instagram.com/nuventures.vc/" target="_blank" aria-label="<?php esc_attr_e('NuVentures on Instagram', 'nuventures'); ?>">
                     <img src="<?php echo esc_url(get_template_directory_uri() . '/assets/images/header/instagram.svg'); ?>" alt="" width="24" height="24">
                 </a>
-                <a class="site-header__social-link" href="#" aria-label="<?php esc_attr_e('NuVentures on LinkedIn', 'nuventures'); ?>">
+                <a class="site-header__social-link" href="https://www.linkedin.com/company/nuventures" target="_blank" aria-label="<?php esc_attr_e('NuVentures on LinkedIn', 'nuventures'); ?>">
                     <img src="<?php echo esc_url(get_template_directory_uri() . '/assets/images/header/linkedin.svg'); ?>" alt="" width="24" height="24">
                 </a>
             </nav>

@@ -125,20 +125,48 @@ $end_years     = wp_list_pluck($entries, 'end_year');
 $earliest_year = min($start_years);
 $latest_year   = max($end_years);
 $year_count    = max(1, ($latest_year - $earliest_year) + 1);
-$year_spacing  = 105;
-$canvas_width  = max(420, (($year_count - 1) * $year_spacing) + 306);
+$year_spacing  = 140;
+$edge_padding  = 0;
+$canvas_width  = max(420, (($year_count - 1) * $year_spacing) + ($edge_padding * 2));
 $asset_path    = get_template_directory_uri() . '/assets/images/nu-journey/';
+$month_initials = array('J', 'F', 'M', 'A', 'M', 'J', 'J', 'A', 'S', 'O', 'N', 'D');
+$last_month_index = max(
+    array_map(
+        static function ($entry) use ($earliest_year) {
+            return (($entry['end_year'] - $earliest_year) * 12) + ($entry['end_month'] - 1);
+        },
+        $entries
+    )
+);
 ?>
 
-<section class="nu-journey-timeline" data-nu-journey-timeline aria-label="<?php esc_attr_e('Journey timeline', 'nuventures'); ?>">
+<section
+    class="nu-journey-timeline"
+    data-nu-journey-timeline
+    data-earliest-year="<?php echo esc_attr($earliest_year); ?>"
+    data-latest-year="<?php echo esc_attr($latest_year); ?>"
+    aria-label="<?php esc_attr_e('Journey timeline', 'nuventures'); ?>"
+>
+    <p class="nu-journey-timeline__instruction">
+        <?php esc_html_e('(Click/Tap on a timeline entry to find out more)', 'nuventures'); ?>
+    </p>
+
     <div class="nu-journey-timeline__sticky-years" data-timeline-sticky-years aria-hidden="true">
         <div
             class="nu-journey-timeline__years"
             data-timeline-years
-            style="--timeline-width: <?php echo esc_attr($canvas_width); ?>px; --year-spacing: <?php echo esc_attr($year_spacing); ?>px;"
+            style="--timeline-width: <?php echo esc_attr($canvas_width); ?>px; --timeline-canvas-width: <?php echo esc_attr($canvas_width); ?>px; --timeline-year-width: <?php echo esc_attr($year_spacing); ?>px; --timeline-edge-padding: <?php echo esc_attr($edge_padding); ?>px;"
         >
             <?php for ($year = $earliest_year; $year <= $latest_year; $year++) : ?>
-                <span style="--year-index: <?php echo esc_attr($year - $earliest_year); ?>;"><?php echo esc_html($year); ?></span>
+                <span class="nu-journey-timeline__year-label" style="--year-index: <?php echo esc_attr($year - $earliest_year); ?>;"><?php echo esc_html($year); ?></span>
+            <?php endfor; ?>
+
+            <?php for ($month_index = 0; $month_index <= $last_month_index; $month_index++) : ?>
+                <span
+                    class="nu-journey-timeline__month-label"
+                    data-timeline-month-label
+                    data-month-index="<?php echo esc_attr($month_index); ?>"
+                ><?php echo esc_html($month_initials[$month_index % 12]); ?></span>
             <?php endfor; ?>
         </div>
     </div>
@@ -147,7 +175,7 @@ $asset_path    = get_template_directory_uri() . '/assets/images/nu-journey/';
         <div
             class="nu-journey-timeline__canvas"
             data-timeline-canvas
-            style="--timeline-width: <?php echo esc_attr($canvas_width); ?>px; --year-spacing: <?php echo esc_attr($year_spacing); ?>px;"
+            style="--timeline-width: <?php echo esc_attr($canvas_width); ?>px; --timeline-canvas-width: <?php echo esc_attr($canvas_width); ?>px; --timeline-year-width: <?php echo esc_attr($year_spacing); ?>px; --timeline-edge-padding: <?php echo esc_attr($edge_padding); ?>px;"
         >
             <div class="nu-journey-timeline__grid" aria-hidden="true"></div>
 

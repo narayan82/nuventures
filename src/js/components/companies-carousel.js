@@ -6,6 +6,7 @@ export function initCompaniesCarousels() {
     const controls = carousel.querySelector('[data-companies-controls]');
     const previousButton = carousel.querySelector('[data-companies-previous]');
     const nextButton = carousel.querySelector('[data-companies-next]');
+    let hasInitialised = false;
 
     if (!track || !controls || !previousButton || !nextButton) {
       return;
@@ -33,9 +34,15 @@ export function initCompaniesCarousels() {
         0,
       );
       const contentWidth = cardsWidth + Math.max(0, cards.length - 1) * gap;
-      const isOverflowing = contentWidth > track.clientWidth + EDGE_TOLERANCE;
+      const wrapperWidth = Math.min(1200, track.clientWidth);
+      const isOverflowing = contentWidth > wrapperWidth + EDGE_TOLERANCE;
 
       carousel.classList.toggle('is-carousel', isOverflowing);
+
+      if (!hasInitialised) {
+        track.scrollLeft = 0;
+        hasInitialised = true;
+      }
 
       const maximumScroll = Math.max(0, track.scrollWidth - track.clientWidth);
 

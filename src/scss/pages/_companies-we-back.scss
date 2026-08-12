@@ -39,9 +39,10 @@
   }
 
   &.is-carousel &__track {
-    padding-inline-start: 20px;
+    width: 100%;
+    padding-inline-start: max(20px, calc((100% - 1200px) / 2));
     padding-inline-end: 20px;
-    scroll-padding-inline-start: 20px;
+    scroll-padding-inline-start: max(20px, calc((100% - 1200px) / 2));
     scroll-padding-inline-end: 20px;
   }
 
@@ -93,10 +94,10 @@
 
   &__logo {
     display: grid;
-    flex: 0 0 80px;
-    width: 80px;
+    flex: 0 0 100px;
+    width: 100px;
     height: 50px;
-    padding: 5px;
+    padding: 0px;
     border-radius: 5px;
     background-color: $color-white;
     place-items: center;
@@ -105,9 +106,9 @@
   &__logo-image {
     display: block;
     width: auto;
-    max-width: 70px;
+    max-width: 90px;
     height: auto;
-    max-height: 44px;
+    max-height: 60px;
     object-fit: contain;
   }
 
@@ -137,9 +138,10 @@
 
   &__founder-names {
     color: #6b7280;
-    font-size: 14px;
+    font-size: 16px;
     font-weight: 400;
-    line-height: 20px;
+    line-height: 22px;
+    margin-top:5px;
   }
 
   &__card:hover,

@@ -1,4 +1,5 @@
-const CANVAS_GUTTER = 48;
+const MIN_PIXELS_PER_YEAR = 140;
+const TIMELINE_EDGE_PADDING = 0;
 const CARDS_TOP = 74;
 const CANVAS_BOTTOM = 32;
 const SCROLL_STOP_DELAY = 180;
@@ -13,8 +14,10 @@ export function initNuJourneyTimelines() {
   document.querySelectorAll('[data-nu-journey-timeline]').forEach((timeline) => {
     const viewport = timeline.querySelector('[data-timeline-viewport]');
     const canvas = timeline.querySelector('[data-timeline-canvas]');
+    const grid = timeline.querySelector('.nu-journey-timeline__grid');
     const stickyYears = timeline.querySelector('[data-timeline-sticky-years]');
     const years = timeline.querySelector('[data-timeline-years]');
+    const monthLabels = Array.from(timeline.querySelectorAll('[data-timeline-month-label]'));
     const cards = Array.from(timeline.querySelectorAll('[data-timeline-entry]'));
     const triggers = Array.from(timeline.querySelectorAll('[data-timeline-dialog-trigger]'));
     const templates = Array.from(timeline.querySelectorAll('[data-timeline-dialog-template]'));
@@ -42,12 +45,27 @@ export function initNuJourneyTimelines() {
       card.style.setProperty('--entry-reveal-delay', `${cardIndex * 120}ms`);
     });
 
+    const entryMonthMarkers = grid
+      ? [...new Set(cards.map((card) => Number.parseInt(card.dataset.monthIndex, 10) || 0))]
+        .map((monthIndex) => {
+          const marker = document.createElement('span');
+
+          marker.className = 'nu-journey-timeline__entry-month';
+          marker.dataset.monthIndex = String(monthIndex);
+          marker.setAttribute('aria-hidden', 'true');
+          grid.append(marker);
+
+          return marker;
+        })
+      : [];
+
     const layout = () => {
       const isMobile = window.matchMedia(`(max-width: ${MOBILE_BREAKPOINT}px)`).matches;
-      const styles = getComputedStyle(canvas);
-      const yearSpacing = Number.parseFloat(styles.getPropertyValue('--year-spacing')) || 105;
 
       if (isMobile) {
+        monthLabels.forEach((label) => {
+          label.style.left = '';
+        });
         const finalMonth = cards.reduce((latestMonth, card) => {
           const monthIndex = Number.parseInt(card.dataset.monthIndex, 10) || 0;
           const monthSpan = Math.max(1, Number.parseInt(card.dataset.monthSpan, 10) || 1);
@@ -113,14 +131,48 @@ export function initNuJourneyTimelines() {
 
       const lanes = [];
       const placedCards = [];
+      const earliestYear = Number.parseInt(timeline.dataset.earliestYear, 10) || 0;
+      const latestYear = Number.parseInt(timeline.dataset.latestYear, 10) || earliestYear;
+      const yearSpan = Math.max(0, latestYear - earliestYear);
+      const finalMonthExtent = cards.reduce((latestMonth, card) => {
+        const monthIndex = Number.parseInt(card.dataset.monthIndex, 10) || 0;
+        const monthSpan = Math.max(1, Number.parseInt(card.dataset.monthSpan, 10) || 1);
+
+        return Math.max(latestMonth, monthIndex + monthSpan);
+      }, 0);
+      const timelineYearExtent = Math.max(yearSpan, finalMonthExtent / 12);
+      const availableWidth = viewport.clientWidth;
+      const usableWidth = Math.max(0, availableWidth - (TIMELINE_EDGE_PADDING * 2));
+      const fittedYearSpacing = timelineYearExtent > 0
+        ? usableWidth / timelineYearExtent
+        : usableWidth;
+      const yearSpacing = Math.max(MIN_PIXELS_PER_YEAR, fittedYearSpacing);
+      const calculatedCanvasWidth = timelineYearExtent > 0
+        ? (TIMELINE_EDGE_PADDING * 2) + (timelineYearExtent * yearSpacing)
+        : Math.max(420, availableWidth);
+      const timelineStart = timelineYearExtent > 0
+        ? TIMELINE_EDGE_PADDING
+        : calculatedCanvasWidth / 2;
+      const monthWidth = yearSpacing / 12;
       let furthestCardEdge = 0;
       let furthestCardBottom = CARDS_TOP;
 
+      entryMonthMarkers.forEach((marker) => {
+        const monthIndex = Number.parseInt(marker.dataset.monthIndex, 10) || 0;
+
+        marker.style.left = `${timelineStart + (monthIndex * monthWidth)}px`;
+      });
+
+      monthLabels.forEach((label) => {
+        const monthIndex = Number.parseInt(label.dataset.monthIndex, 10) || 0;
+
+        label.style.left = `${timelineStart + (monthIndex * monthWidth)}px`;
+      });
+
       cards.forEach((card) => {
-        const monthWidth = yearSpacing / 12;
         const monthIndex = Number.parseInt(card.dataset.monthIndex, 10) || 0;
         const monthSpan = Math.max(1, Number.parseInt(card.dataset.monthSpan, 10) || 1);
-        const cardStart = CANVAS_GUTTER + (monthIndex * monthWidth);
+        const cardStart = timelineStart + (monthIndex * monthWidth);
         const cardWidth = monthSpan * monthWidth;
 
         card.style.width = `${cardWidth}px`;
@@ -176,16 +228,30 @@ export function initNuJourneyTimelines() {
         furthestCardBottom = Math.max(furthestCardBottom, cardBottom);
       });
 
-      const naturalWidth = Math.max(420, Math.ceil(furthestCardEdge + CANVAS_GUTTER));
+      const naturalWidth = Math.max(
+        420,
+        Math.ceil(calculatedCanvasWidth - 0.01),
+        Math.ceil(furthestCardEdge + TIMELINE_EDGE_PADDING - 0.01),
+      );
       const naturalHeight = Math.max(240, Math.ceil(furthestCardBottom + CANVAS_BOTTOM));
       canvas.style.setProperty('--timeline-width', `${naturalWidth}px`);
+      canvas.style.setProperty('--timeline-canvas-width', `${naturalWidth}px`);
+      canvas.style.setProperty('--timeline-year-width', `${yearSpacing}px`);
+      canvas.style.setProperty('--timeline-edge-padding', `${timelineStart}px`);
       canvas.style.setProperty('--timeline-height', `${naturalHeight}px`);
       years.style.width = `${naturalWidth}px`;
+      years.style.setProperty('--timeline-width', `${naturalWidth}px`);
+      years.style.setProperty('--timeline-canvas-width', `${naturalWidth}px`);
+      years.style.setProperty('--timeline-year-width', `${yearSpacing}px`);
+      years.style.setProperty('--timeline-edge-padding', `${timelineStart}px`);
 
-      const isOverflowing = naturalWidth > viewport.clientWidth;
+      const isOverflowing = naturalWidth > viewport.clientWidth + 1;
       const canvasOffset = isOverflowing ? 0 : (viewport.clientWidth - naturalWidth) / 2;
 
       viewport.style.setProperty('--timeline-canvas-offset', `${canvasOffset}px`);
+      viewport.style.setProperty('--timeline-canvas-width', `${naturalWidth}px`);
+      viewport.style.setProperty('--timeline-year-width', `${yearSpacing}px`);
+      viewport.style.setProperty('--timeline-edge-padding', `${timelineStart}px`);
       years.style.marginLeft = `${canvasOffset}px`;
       years.style.transform = `translateX(${-viewport.scrollLeft}px)`;
       timeline.classList.toggle('nu-journey-timeline--overflowing', isOverflowing);
@@ -288,6 +354,10 @@ export function initNuJourneyTimelines() {
 
       activeEntryIndex = (entryIndex + templates.length) % templates.length;
       dialogContent.replaceChildren(templates[activeEntryIndex].content.cloneNode(true));
+      dialog?.classList.toggle(
+        'nu-journey-dialog--text-only',
+        !dialogContent.querySelector('.nu-journey-dialog__image'),
+      );
     };
 
     const openDialog = (entryIndex) => {

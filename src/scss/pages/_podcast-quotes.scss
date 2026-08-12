@@ -231,6 +231,38 @@
   &__control--previous img {
     transform: rotate(180deg);
   }
+
+  &__explore {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 180px;
+    height: 40px;
+    padding: 10px 20px;
+    border: 1px solid rgba($color-brand-red, 0.9);
+    border-radius: 22px;
+    background-color: $color-white;
+    color: $color-brand-red;
+    font-family: Inter, sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1;
+    text-align: center;
+    white-space: nowrap;
+    transition:
+      background-color 180ms ease,
+      color 180ms ease;
+  }
+
+  &__explore:hover {
+    background-color: $color-brand-red;
+    color: $color-white;
+  }
+
+  &__explore:focus-visible {
+    outline: 2px solid $color-brand-red;
+    outline-offset: 3px;
+  }
 }
 
 @media (max-width: $breakpoint-tablet) {
@@ -292,6 +324,16 @@
     &__attribution {
       font-size: 14px;
       line-height: 20px;
+    }
+
+    &__controls {
+      gap: 12px;
+    }
+
+    &__explore {
+      min-width: 164px;
+      padding-inline: 14px;
+      font-size: 13px;
     }
   }
 }

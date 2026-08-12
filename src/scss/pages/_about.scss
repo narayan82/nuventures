@@ -1,7 +1,7 @@
 @use '../base/variables' as *;
 
 .about-page {
-  padding-top: 40px;
+  padding-top: 32px;
   background-color: $color-white;
 }
 
@@ -15,12 +15,13 @@
 }
 
 .about-intro {
-  gap: 20px;
+  gap: 0;
 
   &__icon {
     display: block;
-    width: 128px;
-    height: 128px;
+    width: 64px;
+    height: 64px;
+    margin-bottom: 20px;
     object-fit: contain;
   }
 
@@ -47,11 +48,25 @@
   &__copy {
     display: grid;
     gap: 24px;
+    margin-top: 0;
     color: $color-black;
     font-family: Geist, sans-serif;
     font-size: 16px;
     font-weight: 400;
     line-height: 24px;
+  }
+
+  &__map {
+    width: min(800px, 100%);
+    margin-top: -60px;
+    margin-bottom: 20px;
+    mix-blend-mode: multiply;
+  }
+
+  &__map img {
+    display: block;
+    width: 100%;
+    height: auto;
   }
 
   &__cta {
@@ -70,6 +85,9 @@
     font-weight: 400;
     line-height: 1;
     white-space: nowrap;
+    margin-top: -40px;
+    position: relative;
+    z-index: 1;
     transition:
       background-color 180ms ease,
       color 180ms ease;
@@ -88,7 +106,7 @@
 }
 
 .about-team {
-  gap: 20px;
+  gap: 40px;
   margin-top: 40px;
   padding-bottom: 40px;
 
@@ -191,7 +209,7 @@
 
   &__grid {
     display: grid;
-    grid-template-columns: repeat(5, minmax(0, 1fr));
+    grid-template-columns: repeat(4, minmax(0, 1fr));
     gap: 20px 10px;
     width: min(1200px, calc(100vw - 40px));
   }
@@ -203,8 +221,8 @@
     align-items: center;
     justify-content: space-between;
     min-width: 0;
-    height: 338px;
-    padding: 24px 15px 15px;
+    height: 422px;
+    padding: 14px 15px 15px;
     overflow: hidden;
     border: 1px solid $color-border;
     border-radius: 8px;
@@ -319,9 +337,24 @@
   }
 
   .about-intro {
+    &__icon {
+      margin-bottom: 16px;
+    }
+
     &__copy {
       font-size: 15px;
       line-height: 23px;
+    }
+
+    &__map {
+      width: calc(100vw - 24px);
+      max-width: none;
+      margin-top: -60px;
+      margin-bottom: 20px;
+    }
+
+    &__cta {
+      margin-top: -24px;
     }
   }
 

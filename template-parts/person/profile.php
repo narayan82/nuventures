@@ -45,6 +45,6 @@ $socials     = array(
 
     <a class="person-profile__pitch button-solid-red" href="<?php echo esc_url(home_url('/pitch/')); ?>">
         <img src="<?php echo esc_url(get_template_directory_uri() . '/assets/images/header/rocket.svg'); ?>" alt="" width="16" height="16">
-        <span><?php echo esc_html(sprintf(__('Pitch to %s', 'nuventures'), $first_name)); ?></span>
+        <span><?php echo esc_html(sprintf(__('Pitch Your Idea', 'nuventures'))); ?></span>
     </a>
 </aside>

@@ -35,5 +35,6 @@ export function initAboutTeamSort() {
 
     search.addEventListener('input', applyFilters);
     select.addEventListener('change', applyFilters);
+    applyFilters();
   });
 }

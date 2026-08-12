@@ -23,6 +23,13 @@ $podcast_quotes = array();
 
 foreach ($podcast_query->posts as $podcast_id) {
     $quote_rows = get_field('quotes', $podcast_id);
+    $youtube_url = get_field('youtube_url', $podcast_id);
+
+    if (is_array($youtube_url)) {
+        $youtube_url = isset($youtube_url['url']) ? $youtube_url['url'] : '';
+    }
+
+    $youtube_url = is_string($youtube_url) ? trim($youtube_url) : '';
 
     if (!is_array($quote_rows)) {
         continue;
@@ -41,7 +48,7 @@ foreach ($podcast_query->posts as $podcast_id) {
             'quote'       => $quote,
             'quote_by'    => $quote_by,
             'description' => $description,
-            'permalink'   => get_permalink($podcast_id),
+            'youtube_url' => $youtube_url,
         );
 
         if (5 === count($podcast_quotes)) {
@@ -98,15 +105,17 @@ $podcast_asset_path = get_template_directory_uri() . '/assets/images/podcast/';
                     <?php endif; ?>
                 </div>
 
-                <a class="podcast-quotes__cta" href="<?php echo esc_url($podcast_quote['permalink']); ?>">
-                    <img
-                        src="<?php echo esc_url($podcast_asset_path . 'microphone-icon.svg'); ?>"
-                        alt=""
-                        width="16"
-                        height="16"
-                    >
-                    <span><?php esc_html_e('Listen to the Podcast', 'nuventures'); ?></span>
-                </a>
+                <?php if ($podcast_quote['youtube_url']) : ?>
+                    <a class="podcast-quotes__cta" href="<?php echo esc_url($podcast_quote['youtube_url']); ?>" target="_blank" rel="noopener noreferrer">
+                        <img
+                            src="<?php echo esc_url($podcast_asset_path . 'microphone-icon.svg'); ?>"
+                            alt=""
+                            width="16"
+                            height="16"
+                        >
+                        <span><?php esc_html_e('Listen to the Podcast', 'nuventures'); ?></span>
+                    </a>
+                <?php endif; ?>
             </article>
         <?php endforeach; ?>
     </div>
@@ -115,6 +124,9 @@ $podcast_asset_path = get_template_directory_uri() . '/assets/images/podcast/';
         <button class="podcast-quotes__control podcast-quotes__control--previous" type="button" aria-label="<?php esc_attr_e('Previous podcast quote', 'nuventures'); ?>" data-podcast-previous>
             <img src="<?php echo esc_url(get_template_directory_uri() . '/assets/images/investors/chevron-right.svg'); ?>" alt="" width="8" height="14">
         </button>
+        <a class="podcast-quotes__explore" href="<?php echo esc_url(home_url('/nupod/')); ?>">
+            <?php esc_html_e('Explore All Podcasts', 'nuventures'); ?>
+        </a>
         <button class="podcast-quotes__control" type="button" aria-label="<?php esc_attr_e('Next podcast quote', 'nuventures'); ?>" data-podcast-next>
             <img src="<?php echo esc_url(get_template_directory_uri() . '/assets/images/investors/chevron-right.svg'); ?>" alt="" width="8" height="14">
         </button>

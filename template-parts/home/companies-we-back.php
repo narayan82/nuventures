@@ -135,8 +135,7 @@ $resolve_image = static function ($image, $fallback_alt) {
             <img src="<?php echo esc_url(get_template_directory_uri() . '/assets/images/investors/chevron-right.svg'); ?>" alt="" width="8" height="14">
         </button>
 
-        <?php // TODO: Replace the placeholder URL when the Portfolio page destination is confirmed. ?>
-        <a class="companies-we-back__cta" href="#"><?php esc_html_e('View our portfolio', 'nuventures'); ?></a>
+        <a class="companies-we-back__cta" href="<?php echo esc_url(home_url('/portfolio/')); ?>"><?php esc_html_e('View our portfolio', 'nuventures'); ?></a>
 
         <button class="companies-we-back__control" type="button" aria-label="<?php esc_attr_e('Next companies', 'nuventures'); ?>" data-companies-next hidden>
             <img src="<?php echo esc_url(get_template_directory_uri() . '/assets/images/investors/chevron-right.svg'); ?>" alt="" width="8" height="14">

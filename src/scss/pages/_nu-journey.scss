@@ -6,21 +6,21 @@
   color: $color-black;
 
   &__article {
-    padding-top: 48px;
+    padding-top: 20px;
   }
 
   &__intro {
     display: flex;
     align-items: center;
     flex-direction: column;
-    padding: 0 24px 82px;
+    padding: 0 24px 42px;
     text-align: center;
   }
 
   &__logo {
-    width: 154px;
-    height: 80px;
-    margin-bottom: 40px;
+    width: 350px;
+    height: 150px;
+    margin-bottom: 20px;
     object-fit: contain;
   }
 
@@ -49,6 +49,19 @@
 }
 
 .nu-journey-timeline {
+  width: 100%;
+  padding-inline: 20px;
+
+  &__instruction {
+    margin: 0 0 10px;
+    color: #6b7280;
+    font-family: 'Geist', sans-serif;
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 16px;
+    text-align: center;
+  }
+
   &__viewport {
     position: relative;
     display: flex;
@@ -63,19 +76,19 @@
         rgba(0, 0, 0, 0.045) 0,
         rgba(0, 0, 0, 0.045) 1px,
         transparent 1px,
-        transparent calc(var(--year-spacing, 105px) / 11)
+        transparent calc(var(--timeline-year-width, 140px) / 12)
       ),
       repeating-linear-gradient(
         to right,
         rgba(0, 0, 0, 0.1) 0,
         rgba(0, 0, 0, 0.1) 1px,
         transparent 1px,
-        transparent var(--year-spacing, 105px)
+        transparent var(--timeline-year-width, 140px)
       );
     background-position:
       0 0,
-      calc(var(--timeline-canvas-offset, 0px) + 48px) 0,
-      calc(var(--timeline-canvas-offset, 0px) + 48px) 0;
+      calc(var(--timeline-canvas-offset, 0px) + var(--timeline-edge-padding, 0px)) 0,
+      calc(var(--timeline-canvas-offset, 0px) + var(--timeline-edge-padding, 0px)) 0;
     scrollbar-color: #a6a6a6 #f6f6f6;
     -webkit-overflow-scrolling: touch;
 
@@ -101,16 +114,45 @@
     height: 32px;
     will-change: transform;
 
-    span {
+    .nu-journey-timeline__year-label {
       position: absolute;
-      top: 8px;
-      left: calc(48px + (var(--year-index) * var(--year-spacing)));
-      width: var(--year-spacing);
+      top: 2px;
+      left: calc(var(--timeline-edge-padding, 0px) + (var(--year-index) * var(--timeline-year-width, 140px)));
+      width: 80px;
       font-family: 'Geist', sans-serif;
       font-size: 12px;
       font-weight: 400;
       line-height: 16px;
       text-align: center;
+      transform: translateX(-50%);
+
+      &:first-child {
+        text-align: left;
+        transform: none;
+      }
+
+      &:last-child {
+        text-align: right;
+        transform: translateX(-100%);
+      }
+
+      &:only-child {
+        text-align: left;
+        transform: none;
+      }
+    }
+
+    .nu-journey-timeline__month-label {
+      position: absolute;
+      top: 20px;
+      width: 16px;
+      color: #737780;
+      font-family: 'Geist', sans-serif;
+      font-size: 8px;
+      font-weight: 400;
+      line-height: 10px;
+      text-align: center;
+      transform: translateX(-50%);
     }
   }
 
@@ -143,17 +185,27 @@
         rgba(0, 0, 0, 0.045) 0,
         rgba(0, 0, 0, 0.045) 1px,
         transparent 1px,
-        transparent calc(var(--year-spacing) / 11)
+        transparent calc(var(--timeline-year-width, 140px) / 12)
       ),
       repeating-linear-gradient(
         to right,
         rgba(0, 0, 0, 0.1) 0,
         rgba(0, 0, 0, 0.1) 1px,
         transparent 1px,
-        transparent var(--year-spacing)
+        transparent var(--timeline-year-width, 140px)
       );
-    background-position-x: 48px;
+    background-position-x: var(--timeline-edge-padding, 0px);
     pointer-events: none;
+  }
+
+  &__entry-month {
+    position: absolute;
+    z-index: 1;
+    top: 0;
+    bottom: 0;
+    width: 1px;
+    background-color: lightsalmon;
+    transform: translateX(-1px);
   }
 
   &__entries {
@@ -167,8 +219,8 @@
   &__entry {
     position: absolute;
     z-index: 3;
-    width: var(--year-spacing);
-    min-height: 112px;
+    width: var(--timeline-year-width, 140px);
+    min-height: 70px;
     color: $color-black;
 
     &--dark .nu-journey-timeline__trigger {
@@ -190,7 +242,7 @@
     overflow: hidden;
     flex-direction: column;
     color: inherit;
-    border: 2px solid transparent;
+    border: 1px solid transparent;
     background: $color-white;
     font: inherit;
     text-align: left;
@@ -205,8 +257,8 @@
     }
 
     &:focus-visible {
-      outline: 2px solid $color-brand-red;
-      outline-offset: 2px;
+      outline: 1px solid $color-brand-red;
+      outline-offset: 1px;
     }
   }
 
@@ -271,6 +323,7 @@
         opacity 480ms ease,
         transform 560ms cubic-bezier(0.22, 1, 0.36, 1);
       transition-delay: var(--entry-reveal-delay, 0ms);
+      border:1px solid lightgray;
     }
   }
 }
@@ -318,11 +371,24 @@
     overflow-y: auto;
   }
 
+  &--text-only &__panel {
+    height: auto;
+    max-height: calc(100dvh - 32px);
+  }
+
+  &--text-only &__content {
+    height: auto;
+    min-height: 0;
+    max-height: calc(100dvh - 32px);
+    padding: 40px 64px 40px 32px;
+  }
+
   &__image {
     flex: 0 0 auto;
     width: 660px;
     height: 355px;
-    object-fit: cover;
+    object-fit: contain;
+    background-color:#141b34;
   }
 
   &__date {
@@ -366,7 +432,7 @@
     height: 32px;
     padding: 4px;
     border: 0;
-    border-radius: 0%;
+    border-radius: 50%;
     background: #e7e7e7;
     cursor: pointer;
     place-items: center;
@@ -463,14 +529,17 @@
     gap: 10px;
     margin: 0;
     padding: 20px;
-    color: $color-white;
+    color: #141b34;
+    border: 1px solid #6b7280;
     border-radius: 20px 20px 20px 0;
-    background: #6b7280;
+    background: $color-white;
 
     > img {
       flex: 0 0 24px;
       width: 24px;
       height: 18px;
+      filter: brightness(0) saturate(100%) invert(10%) sepia(17%) saturate(1772%) hue-rotate(190deg) brightness(92%) contrast(95%);
+      transform: scaleX(-1);
     }
 
     p {
@@ -484,9 +553,9 @@
 
   &__attribution {
     display: flex;
-    align-items: flex-start;
-    flex-direction: column;
-    margin-top: 10px;
+    align-items: center;
+    gap: 12px;
+    margin-top: 20px;
     font-family: 'Geist', sans-serif;
     line-height: 18px;
 
@@ -510,6 +579,22 @@
       }
     }
   }
+
+  &__photo {
+    display: block;
+    flex: 0 0 32px;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+
+  &__attribution-copy {
+    display: flex;
+    align-items: flex-start;
+    flex-direction: column;
+    min-width: 0;
+  }
 }
 
 .nu-journey-closing {
@@ -521,7 +606,37 @@
   text-align: center;
 
   p {
-    margin: 0;
+    margin: 20px 0;
+  }
+
+  &__cta {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 20px;
+    margin-top: 32px;
+    border: 1px solid $color-brand-red;
+    border-radius: 32px;
+    background-color: $color-white;
+    color: $color-brand-red;
+    font-family: 'Geist', sans-serif;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 24px;
+    transition:
+      background-color 180ms ease,
+      color 180ms ease,
+      transform 180ms ease;
+
+    &:hover {
+      background-color: $color-brand-red;
+      color: $color-white;
+    }
+
+    &:focus-visible {
+      outline: 2px solid $color-brand-red;
+      outline-offset: 3px;
+    }
   }
 }
 
@@ -617,7 +732,7 @@
       position: absolute;
       z-index: 5;
       top: 0;
-      left: 0;
+      left: 20px;
       width: 74px;
       height: var(--timeline-height);
       margin: 0;
@@ -633,7 +748,7 @@
       transform: none;
       will-change: auto;
 
-      span {
+      .nu-journey-timeline__year-label {
         top: calc(32px + (var(--year-index) * 12 * var(--mobile-month-height, 15px)));
         left: 0;
         width: 64px;
@@ -642,6 +757,16 @@
         line-height: 16px;
         text-align: right;
         transform: translateY(-50%);
+
+        &:first-child,
+        &:last-child {
+          text-align: right;
+          transform: translateY(-50%);
+        }
+      }
+
+      .nu-journey-timeline__month-label {
+        display: none;
       }
     }
 
@@ -685,6 +810,10 @@
           transparent calc(var(--mobile-month-height, 15px) * 12)
         );
       background-position: 0;
+    }
+
+    &__entry-month {
+      display: none;
     }
 
     &__entry {
@@ -749,6 +878,17 @@
       -webkit-overflow-scrolling: touch;
     }
 
+    &--text-only .nu-journey-dialog__panel {
+      height: 100%;
+      max-height: none;
+    }
+
+    &--text-only .nu-journey-dialog__content {
+      height: 100%;
+      max-height: none;
+      padding: 16px 16px calc(88px + env(safe-area-inset-bottom));
+    }
+
     &__image {
       width: 100%;
       height: min(355px, 42dvh);
@@ -801,6 +941,14 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .nu-journey-closing__cta {
+    transition: none;
+
+    &:hover {
+      transform: none;
+    }
+  }
+
   .nu-journey-timeline {
     &.is-entry-reveal-ready,
     &.is-entry-revealed {

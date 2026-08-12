@@ -8,7 +8,7 @@
   padding: 40px 40px;
 
   &__copy {
-    width: min(640px, 100%);
+    width: min(740px, 100%);
     margin: 0;
     color: #585e68;
     font-family: Geist, sans-serif;
@@ -40,7 +40,7 @@
 
   &__detail-lead {
     color: inherit;
-    font-weight: 700;
+    font-weight: 600;
   }
 
   &__marker-wrap:hover {
@@ -128,7 +128,7 @@
     padding: 60px 24px;
 
     &__copy {
-      max-width: 560px;
+      max-width: 760px;
       font-size: 28px;
       line-height: 42px;
     }

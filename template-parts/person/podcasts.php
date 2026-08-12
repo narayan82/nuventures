@@ -25,7 +25,13 @@ if (!$podcasts) {
             $url         = $spotify ?: ($youtube ?: get_permalink($id));
             $external    = (bool) ($spotify || $youtube);
             $date_value  = get_field('podcast_date', $id);
-            $timestamp   = $date_value ? strtotime((string) $date_value) : get_post_time('U', true, $podcast);
+            $timestamp   = is_scalar($date_value) && '' !== trim((string) $date_value)
+                ? strtotime((string) $date_value)
+                : false;
+
+            if (false === $timestamp) {
+                $timestamp = (int) get_post_time('U', true, $podcast);
+            }
             ?>
             <article class="person-related-card">
                 <time datetime="<?php echo esc_attr(gmdate('Y-m-d', $timestamp)); ?>"><?php echo esc_html(wp_date('j-M-Y', $timestamp)); ?></time>
