@@ -1,0 +1,115 @@
+.basic-page {
+    padding: 40px 24px 40px;
+    font-family: 'Geist', sans-serif;
+
+    &__container {
+        width: 100%;
+        max-width: 900px;
+        margin: 0 auto;
+    }
+
+    &__header {
+        margin-bottom: 24px;
+    }
+
+    &__title {
+        margin: 0;
+        font-size: clamp(42px, 5vw, 72px);
+        line-height: 1;
+        font-weight: 500;
+    }
+
+    &__content {
+        font-size: 18px;
+        line-height: 1.65;
+
+        p {
+            margin: 10px 0 10px;
+        }
+
+        h2 {
+            margin: 20px 0 14px;
+            font-size: 20px;
+            line-height: 1.15;
+        }
+
+        h3 {
+            margin: 20px 0 20px;
+            font-size: 26px;
+            line-height: 1.2;
+        }
+
+        h4 {
+            margin: 20px 0 10px;
+            font-size: 21px;
+        }
+
+        ul,
+        ol {
+            margin: 0 0 20px;
+            padding-left: 20px;
+        }
+
+        li {
+            margin-bottom: 10px;
+        }
+
+        a {
+            text-decoration: underline;
+        }
+
+        blockquote {
+            margin: 40px 0;
+            padding-left: 24px;
+            border-left: 2px solid currentColor;
+        }
+
+        img {
+            display: block;
+            max-width: 100%;
+            height: auto;
+            margin: 40px 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 32px 0;
+        }
+
+        th,
+        td {
+            padding: 12px;
+            border: 1px solid rgba(0, 0, 0, 0.15);
+            text-align: left;
+        }
+    }
+}
+
+@media (max-width: 550px) {
+    .basic-page {
+        padding: 40px 20px 40px;
+
+        &__header {
+            margin-bottom: 20px;
+        }
+
+        &__content {
+            font-size: 16px;
+
+            h2 {
+                margin-top: 40px;
+                font-size: 20px;
+            }
+
+            h3 {
+                font-size: 23px;
+            }
+
+            table {
+                display: block;
+                overflow-x: auto;
+            }
+        }
+    }
+}

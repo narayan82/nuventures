@@ -17,7 +17,7 @@ $socials     = array(
     'linkedin' => array('label' => 'LinkedIn', 'url' => get_field('linkedin', $person_id)),
 );
 ?>
-<aside class="person-profile" aria-label="<?php echo esc_attr(sprintf(__('%s profile', 'nuventures'), $person_name)); ?>">
+<header class="person-profile" aria-label="<?php echo esc_attr(sprintf(__('%s profile', 'nuventures'), $person_name)); ?>">
     <?php if ($photo['id'] || $photo['url']) : ?>
         <div class="person-profile__photo">
             <?php if ($photo['id']) : ?>
@@ -47,4 +47,4 @@ $socials     = array(
         <img src="<?php echo esc_url(get_template_directory_uri() . '/assets/images/header/rocket.svg'); ?>" alt="" width="16" height="16">
         <span><?php echo esc_html(sprintf(__('Pitch Your Idea', 'nuventures'))); ?></span>
     </a>
-</aside>
+</header>

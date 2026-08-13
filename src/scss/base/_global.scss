@@ -7,3 +7,21 @@ body {
   color: #111111;
   min-height: 100vh;
 }
+
+.skip-link {
+  position: fixed;
+  z-index: 10000;
+  top: 12px;
+  left: 12px;
+  padding: 10px 14px;
+  border: 2px solid #da0009;
+  border-radius: 4px;
+  background: #ffffff;
+  color: #111111;
+  font-family: Geist, sans-serif;
+  transform: translateY(calc(-100% - 24px));
+
+  &:focus {
+    transform: translateY(0);
+  }
+}

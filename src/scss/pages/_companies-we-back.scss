@@ -16,10 +16,11 @@
     font-family: Geist, sans-serif;
     font-size: 24px;
     font-weight: 200;
-    line-height: 48px;
+    line-height: 34px;
     text-align: center;
     text-box-edge: cap alphabetic;
     text-box-trim: trim-both;
+    padding:0 20px;
   }
 
   &__track {
@@ -44,6 +45,7 @@
     padding-inline-end: 20px;
     scroll-padding-inline-start: max(20px, calc((100% - 1200px) / 2));
     scroll-padding-inline-end: 20px;
+    z-index: 1000;
   }
 
   &__card {
@@ -223,6 +225,7 @@
     text-align: center;
     text-box-edge: cap alphabetic;
     text-box-trim: trim-both;
+    z-index: 1000;
     white-space: nowrap;
     transition:
       background-color 180ms ease,

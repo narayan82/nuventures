@@ -41,7 +41,7 @@ asort($category_options, SORT_NATURAL | SORT_FLAG_CASE);
 get_header();
 ?>
 
-<main class="initiatives-page">
+<main class="initiatives-page" id="main-content">
     <?php get_template_part('template-parts/initiatives/intro'); ?>
     <?php get_template_part('template-parts/initiatives/filters', null, array('categories' => $category_options)); ?>
     <?php get_template_part('template-parts/initiatives/grid', null, array('initiatives' => $initiatives)); ?>

@@ -112,7 +112,8 @@ function nuventures_analyse_pitch(WP_REST_Request $request) {
         }
 
         $file_id  = $uploaded;
-        $response = nuventures_openai_extract_pitch($file_id);
+        $response_id = '';
+        $response = nuventures_openai_extract_pitch($file_id, $response_id);
         if (is_wp_error($response)) {
             return $response;
         }
@@ -120,6 +121,14 @@ function nuventures_analyse_pitch(WP_REST_Request $request) {
         $validated = nuventures_validate_pitch_extraction($response);
         if (is_wp_error($validated)) {
             return $validated;
+        }
+
+        if ('' !== $response_id) {
+            set_transient(
+                nuventures_pitch_analysis_transient_key($session_token),
+                array('openai_response_id' => $response_id),
+                NUVENTURES_PITCH_SESSION_TTL
+            );
         }
 
         return rest_ensure_response($validated);
@@ -267,7 +276,7 @@ function nuventures_openai_upload_pitch_file($file) {
  * @param string $file_id OpenAI file ID.
  * @return array|WP_Error Decoded extraction result.
  */
-function nuventures_openai_extract_pitch($file_id) {
+function nuventures_openai_extract_pitch($file_id, &$response_id = '') {
     $body = array(
         'prompt' => array(
             'id'      => trim(NUVENTURES_OPENAI_PROMPT_ID),
@@ -321,6 +330,10 @@ function nuventures_openai_extract_pitch($file_id) {
         );
     }
 
+    $response_id = isset($data['id']) && is_string($data['id'])
+        ? sanitize_text_field($data['id'])
+        : '';
+
     $diagnostics = array();
     $output_text = nuventures_pitch_response_output_text($data, $diagnostics);
     if ('' === $output_text) {
@@ -341,6 +354,16 @@ function nuventures_openai_extract_pitch($file_id) {
     }
 
     return $extraction;
+}
+
+/**
+ * Build a non-reversible transient key for server-side pitch analysis state.
+ *
+ * @param string $session_token Signed pitch-session token.
+ * @return string
+ */
+function nuventures_pitch_analysis_transient_key($session_token) {
+    return 'nuv_pitch_' . hash_hmac('sha256', $session_token, wp_salt('auth'));
 }
 
 /**

@@ -68,8 +68,7 @@ if (!$latest_updates->have_posts()) {
             <img src="<?php echo esc_url(get_template_directory_uri() . '/assets/images/investors/chevron-right.svg'); ?>" alt="" width="8" height="14">
         </button>
 
-        <?php // TODO: Replace with the initiatives archive URL once that destination is defined. ?>
-        <a class="latest-updates__cta" href="#">
+        <a class="latest-updates__cta" href="<?php echo esc_url(home_url('/initiatives/')); ?>">
             <?php esc_html_e('See All Initiatives', 'nuventures'); ?>
         </a>
 

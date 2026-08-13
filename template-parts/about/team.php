@@ -78,8 +78,7 @@ foreach ($person_taxonomies as $person_taxonomy) {
             $photo_alt         = '';
             $category_slugs    = array();
             $is_partner        = $partner_taxonomy && has_term('partner', $partner_taxonomy, $person_id);
-            $card_element      = $is_partner ? 'a' : 'article';
-            $card_attributes   = $is_partner ? ' href="' . esc_url(get_permalink($person_id)) . '"' : '';
+            $linkedin_url      = get_field('linkedin', $person_id);
 
             if (!$person_name) {
                 $person_name = get_the_title($person_post);
@@ -107,14 +106,21 @@ foreach ($person_taxonomies as $person_taxonomy) {
 
             $category_slugs = array_values(array_unique(array_filter($category_slugs)));
             ?>
-            <<?php echo esc_html($card_element); ?>
+            <article
                 class="about-team__card<?php echo $is_partner ? ' about-team__card--linked' : ''; ?>"
                 data-person-name="<?php echo esc_attr(wp_strip_all_tags($person_name)); ?>"
                 <?php if ($category_slugs) : ?>
                     data-person-category="<?php echo esc_attr(implode(' ', $category_slugs)); ?>"
                 <?php endif; ?>
-                <?php echo $card_attributes; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
             >
+                <?php if ($is_partner) : ?>
+                    <a
+                        class="about-team__profile-link"
+                        href="<?php echo esc_url(get_permalink($person_id)); ?>"
+                        aria-label="<?php echo esc_attr(sprintf(__('View %s’s profile', 'nuventures'), $person_name)); ?>"
+                    ></a>
+                <?php endif; ?>
+
                 <?php if ($photo_id) : ?>
                     <?php
                     echo wp_get_attachment_image(
@@ -147,17 +153,42 @@ foreach ($person_taxonomies as $person_taxonomy) {
                     <?php endif; ?>
                 </span>
 
-                <?php if ($is_partner) : ?>
-                    <span class="about-team__arrow" aria-hidden="true">
-                        <img
-                            src="<?php echo esc_url(get_template_directory_uri() . '/assets/images/investors/arrow-right.svg'); ?>"
-                            alt=""
-                            width="13"
-                            height="12"
-                        >
+                <?php if ($is_partner || $linkedin_url) : ?>
+                    <span class="about-team__actions">
+                        <?php if ($is_partner) : ?>
+                            <a
+                                class="about-team__action about-team__arrow"
+                                href="<?php echo esc_url(get_permalink($person_id)); ?>"
+                                aria-label="<?php echo esc_attr(sprintf(__('View %s’s profile', 'nuventures'), $person_name)); ?>"
+                            >
+                                <img
+                                    src="<?php echo esc_url(get_template_directory_uri() . '/assets/images/investors/arrow-right.svg'); ?>"
+                                    alt=""
+                                    width="13"
+                                    height="12"
+                                >
+                            </a>
+                        <?php endif; ?>
+
+                        <?php if ($linkedin_url) : ?>
+                            <a
+                                class="about-team__action about-team__linkedin"
+                                href="<?php echo esc_url($linkedin_url); ?>"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                aria-label="<?php echo esc_attr(sprintf(__('View %s on LinkedIn', 'nuventures'), $person_name)); ?>"
+                            >
+                                <img
+                                    src="<?php echo esc_url(get_template_directory_uri() . '/assets/images/header/linkedin.svg'); ?>"
+                                    alt=""
+                                    width="18"
+                                    height="18"
+                                >
+                            </a>
+                        <?php endif; ?>
                     </span>
                 <?php endif; ?>
-            </<?php echo esc_html($card_element); ?>>
+            </article>
         <?php endforeach; ?>
     </div>
 </section>

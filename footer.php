@@ -13,9 +13,7 @@ $footer_asset_path = get_template_directory_uri() . '/assets/images/footer/';
         <div class="site-footer__legal">
             <p>
                 <?php esc_html_e('Copyright 2026-27. NuVentures Pvt Ltd. All Rights reserved.', 'nuventures'); ?>
-                <?php // TODO: Replace the legal placeholder URLs when their pages are defined. ?>
-                <a href="#"><?php esc_html_e('Terms of Use', 'nuventures'); ?></a>.
-                <a href="#"><?php esc_html_e('Disclaimer', 'nuventures'); ?></a>
+                <a href="<?php echo esc_url(home_url('/disclaimer')); ?>"><?php esc_html_e('Disclaimer', 'nuventures'); ?></a> &amp; <a href="<?php echo esc_url(home_url('/privacy-policy')); ?>"><?php esc_html_e('Privacy Policy', 'nuventures'); ?></a>
             </p>
             <p>
                 <a href="mailto:NuVConnect@nuware.com">
@@ -24,7 +22,6 @@ $footer_asset_path = get_template_directory_uri() . '/assets/images/footer/';
             </p>
         </div>
 
-        <?php // TODO: Replace the footer navigation placeholder URLs when final routes are defined. ?>
         <nav class="site-footer__navigation" aria-label="<?php esc_attr_e('Footer navigation', 'nuventures'); ?>">
             <ul>
                 <li><a href="<?php echo esc_url(home_url('/')); ?>"><?php esc_html_e('Home', 'nuventures'); ?></a></li>
@@ -38,22 +35,22 @@ $footer_asset_path = get_template_directory_uri() . '/assets/images/footer/';
         <?php // TODO: Replace the social placeholder URLs with the official profiles. ?>
         <ul class="site-footer__socials" aria-label="<?php esc_attr_e('Social media', 'nuventures'); ?>">
             <li>
-                <a href="#" aria-label="<?php esc_attr_e('YouTube', 'nuventures'); ?>">
+                <a href="https://www.youtube.com/@nuventures" target="_blank" aria-label="<?php esc_attr_e('YouTube', 'nuventures'); ?>">
                     <img src="<?php echo esc_url($footer_asset_path . 'youtube.svg'); ?>" alt="" width="24" height="24">
                 </a>
             </li>
             <li>
-                <a href="#" aria-label="<?php esc_attr_e('X', 'nuventures'); ?>">
+                <a href="https://x.com/NuVentures_in" target="_blank" aria-label="<?php esc_attr_e('X', 'nuventures'); ?>">
                     <img src="<?php echo esc_url($footer_asset_path . 'x.svg'); ?>" alt="" width="24" height="24">
                 </a>
             </li>
             <li>
-                <a href="#" aria-label="<?php esc_attr_e('Instagram', 'nuventures'); ?>">
+                <a href="https://www.instagram.com/nuventures.vc/" target="_blank" aria-label="<?php esc_attr_e('Instagram', 'nuventures'); ?>">
                     <img src="<?php echo esc_url($footer_asset_path . 'instagram.svg'); ?>" alt="" width="24" height="24">
                 </a>
             </li>
             <li>
-                <a href="#" aria-label="<?php esc_attr_e('LinkedIn', 'nuventures'); ?>">
+                <a href="https://www.linkedin.com/company/nuventures" aria-label="<?php esc_attr_e('LinkedIn', 'nuventures'); ?>">
                     <img src="<?php echo esc_url($footer_asset_path . 'linkedin.svg'); ?>" alt="" width="24" height="24">
                 </a>
             </li>

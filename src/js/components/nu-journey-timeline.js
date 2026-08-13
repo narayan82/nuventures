@@ -4,9 +4,9 @@ const CARDS_TOP = 74;
 const CANVAS_BOTTOM = 32;
 const SCROLL_STOP_DELAY = 180;
 const MOBILE_BREAKPOINT = 550;
-const MOBILE_DATE_COLUMN = 74;
+const MOBILE_DATE_COLUMN = 68;
 const MOBILE_COLUMN_GAP = 12;
-const MOBILE_MONTH_HEIGHT = 15;
+const MOBILE_MONTH_HEIGHT = 24;
 const MOBILE_TIMELINE_TOP = 32;
 const MOBILE_TIMELINE_BOTTOM = 32;
 
@@ -65,6 +65,8 @@ export function initNuJourneyTimelines() {
       if (isMobile) {
         monthLabels.forEach((label) => {
           label.style.left = '';
+          const monthIndex = Number.parseInt(label.dataset.monthIndex, 10) || 0;
+          label.style.top = `${MOBILE_TIMELINE_TOP + (monthIndex * MOBILE_MONTH_HEIGHT) + 7}px`;
         });
         const finalMonth = cards.reduce((latestMonth, card) => {
           const monthIndex = Number.parseInt(card.dataset.monthIndex, 10) || 0;
@@ -123,6 +125,9 @@ export function initNuJourneyTimelines() {
       }
 
       years.style.height = '';
+      monthLabels.forEach((label) => {
+        label.style.top = '';
+      });
       stickyYears.style.removeProperty('--timeline-height');
       timeline.style.removeProperty('--mobile-month-height');
       cards.forEach((card) => {

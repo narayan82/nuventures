@@ -53,7 +53,7 @@
             </a>
             <a class="slide-menu__link" href="<?php echo esc_url(home_url('/nupod/')); ?>">
                 <img src="<?php echo esc_url(get_template_directory_uri() . '/assets/images/menu/nupod.svg'); ?>" alt="" width="24" height="24">
-                <span><?php esc_html_e('NuPOD', 'nuventures'); ?></span>
+                <span><?php esc_html_e('nupod', 'nuventures'); ?></span>
             </a>
         </nav>
     </aside>

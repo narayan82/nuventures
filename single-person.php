@@ -89,7 +89,7 @@ while (have_posts()) :
         'articles'       => $articles,
     );
     ?>
-    <main class="person-page">
+    <main class="person-page" id="main-content">
         <article class="person-page__layout">
             <?php get_template_part('template-parts/person/profile', null, $shared_args); ?>
 

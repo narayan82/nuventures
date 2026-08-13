@@ -1,7 +1,10 @@
 <?php
 
 require_once get_template_directory() . '/inc/pitch-api.php';
+require_once get_template_directory() . '/inc/pitch-otp.php';
+require_once get_template_directory() . '/inc/pitch-submissions.php';
 require_once get_template_directory() . '/inc/person-helpers.php';
+require_once get_template_directory() . '/inc/seo.php';
 
 function nuventures_assets() {
     wp_enqueue_style(

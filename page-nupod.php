@@ -106,7 +106,7 @@ natcasesort($speaker_options);
 get_header();
 ?>
 
-<main class="nupod-page">
+<main class="nupod-page" id="main-content">
     <?php get_template_part('template-parts/nupod/intro'); ?>
 
     <section class="nupod-list portfolio-companies" data-nupod-list aria-label="<?php esc_attr_e('Podcasts', 'nuventures'); ?>">

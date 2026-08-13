@@ -3,7 +3,7 @@ const TOTAL_STEPS = 6;
 const PROGRESS_DOTS = 5;
 const STEP_TO_PROGRESS = [1, 2, 2, 3, 4, 5];
 const MOBILE_PATTERN = /^\+?[\d\s()-]{10,20}$/;
-const OTP_PATTERN = /^\d{4}$/;
+const OTP_PATTERN = /^\d{6}$/;
 const MOBILE_VIEWPORT = '(max-width: 550px)';
 const RETURN_URL_KEY = 'nuventuresPitchReturnUrl';
 const MAX_PITCH_FILE_SIZE = 10 * 1024 * 1024;
@@ -68,6 +68,8 @@ export function initPitchFlow() {
       fullName: '',
       mobile: '',
       otp: '',
+      otpVerified: false,
+      verificationToken: '',
       pitchDeck: null,
       entryMethod: '',
       manual: {},
@@ -86,6 +88,8 @@ export function initPitchFlow() {
     let lockedScrollY = 0;
     let focusScrollTimer = 0;
     let confettiTimer = 0;
+    let otpRequestInProgress = false;
+    let otpCooldownTimer = 0;
 
     if (!panel || !backButton || !steps.length) {
       return;
@@ -494,7 +498,7 @@ export function initPitchFlow() {
 
       if (stepNumber === 3) {
         if (!OTP_PATTERN.test(value)) {
-          return 'Please enter any four digits for the mocked OTP.';
+          return 'Please enter the six-digit verification code.';
         }
         state.otp = value;
       }
@@ -520,6 +524,131 @@ export function initPitchFlow() {
 
     const setSendReady = (form, ready) => {
       form.querySelector('.pitch-flow__send')?.classList.toggle('is-ready', ready);
+    };
+
+    const otpForm = forms.find((form) => Number(form.dataset.pitchForm) === 3);
+    const otpInput = otpForm?.querySelector('[data-pitch-input]');
+    const otpResendButton = otpForm?.querySelector('[data-pitch-otp-resend]');
+
+    const requestOtpAction = async (action, extraData = {}) => {
+      const ajaxUrl = flow.dataset.pitchAjaxUrl;
+      const nonce = flow.dataset.pitchOtpNonce;
+      const pitchSession = flow.dataset.pitchSession;
+      if (!ajaxUrl || !nonce || !pitchSession) {
+        throw new Error('We could not verify your mobile right now. Please try again.');
+      }
+
+      const payload = new FormData();
+      payload.append('action', action);
+      payload.append('nonce', nonce);
+      payload.append('pitch_session', pitchSession);
+      Object.entries(extraData).forEach(([key, value]) => payload.append(key, value));
+
+      const response = await fetch(ajaxUrl, {
+        method: 'POST',
+        body: payload,
+        credentials: 'same-origin',
+      });
+      const result = await response.json().catch(() => null);
+      if (!response.ok || !result?.success) {
+        throw new Error(result?.data?.message || 'We could not verify your mobile right now. Please try again.');
+      }
+      return result.data || {};
+    };
+
+    const startOtpCooldown = (seconds = 45) => {
+      window.clearInterval(otpCooldownTimer);
+      let remaining = Math.max(0, Number(seconds) || 0);
+
+      const update = () => {
+        if (!otpResendButton) {
+          return;
+        }
+        otpResendButton.disabled = remaining > 0;
+        otpResendButton.textContent = remaining > 0 ? `Resend OTP in ${remaining}s` : 'Resend OTP';
+        remaining -= 1;
+        if (remaining < 0) {
+          window.clearInterval(otpCooldownTimer);
+        }
+      };
+
+      update();
+      otpCooldownTimer = window.setInterval(update, 1000);
+    };
+
+    const sendOtp = async (form, isResend = false) => {
+      if (otpRequestInProgress) {
+        return false;
+      }
+
+      otpRequestInProgress = true;
+      const submitButton = form.querySelector('.pitch-flow__send');
+      if (submitButton) {
+        submitButton.disabled = true;
+      }
+      showError(form, isResend ? 'Sending a new verification code…' : 'Sending verification code…', true);
+
+      try {
+        const result = await requestOtpAction('nuventures_pitch_send_otp', {
+          mobile: state.mobile,
+          verification_token: state.verificationToken,
+        });
+        state.verificationToken = result.verification_token || state.verificationToken;
+        state.otpVerified = false;
+        state.otp = '';
+        if (otpInput) {
+          otpInput.value = '';
+          setSendReady(otpForm, false);
+        }
+        showError(otpForm || form, result.message || "We've sent a verification code to your mobile.", true);
+        startOtpCooldown(result.cooldown || 45);
+        return true;
+      } catch (error) {
+        showError(form, error?.message || "We couldn't send a verification code right now. Please try again.");
+        return false;
+      } finally {
+        otpRequestInProgress = false;
+        if (submitButton) {
+          submitButton.disabled = false;
+        }
+      }
+    };
+
+    const verifyOtp = async () => {
+      if (!otpForm || otpRequestInProgress) {
+        return;
+      }
+      const otp = otpInput?.value.replace(/\D/g, '') || '';
+      if (!OTP_PATTERN.test(otp)) {
+        showError(otpForm, "That code doesn't look right. Please try again.");
+        return;
+      }
+
+      otpRequestInProgress = true;
+      const submitButton = otpForm.querySelector('.pitch-flow__send');
+      if (submitButton) {
+        submitButton.disabled = true;
+      }
+      showError(otpForm, 'Checking verification code…', true);
+
+      try {
+        const result = await requestOtpAction('nuventures_pitch_verify_otp', {
+          otp,
+          verification_token: state.verificationToken,
+        });
+        state.otp = otp;
+        state.otpVerified = true;
+        showError(otpForm, result.message || 'Mobile number verified.', true);
+        renderStep(4);
+      } catch (error) {
+        state.otpVerified = false;
+        showError(otpForm, error?.message || "We couldn't verify the code right now. Please try again.");
+      } finally {
+        otpRequestInProgress = false;
+        if (submitButton) {
+          submitButton.disabled = false;
+        }
+      }
     };
 
     const closeFlow = () => {
@@ -588,7 +717,7 @@ export function initPitchFlow() {
         setSendReady(form, hasValidStepValue(stepNumber, input.value));
       });
 
-      if (stepNumber <= 3) {
+      if (stepNumber === 1) {
         form.addEventListener('submit', (event) => {
           event.preventDefault();
           const error = validateStep(form, stepNumber);
@@ -599,6 +728,49 @@ export function initPitchFlow() {
           }
         });
       }
+    });
+
+    const mobileForm = forms.find((form) => Number(form.dataset.pitchForm) === 2);
+    mobileForm?.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      const error = validateStep(mobileForm, 2);
+      showError(mobileForm, error);
+      if (error) {
+        return;
+      }
+
+      const previousMobile = state.mobile;
+      state.verificationToken = '';
+      state.otpVerified = false;
+      const sent = await sendOtp(mobileForm);
+      if (sent) {
+        renderStep(3);
+      } else {
+        state.mobile = previousMobile;
+      }
+    });
+
+    otpForm?.addEventListener('submit', (event) => {
+      event.preventDefault();
+      verifyOtp();
+    });
+
+    otpInput?.addEventListener('input', () => {
+      const numericValue = otpInput.value.replace(/\D/g, '').slice(0, 6);
+      if (otpInput.value !== numericValue) {
+        otpInput.value = numericValue;
+      }
+      state.otp = numericValue;
+      if (numericValue.length === 6 && !otpRequestInProgress) {
+        verifyOtp();
+      }
+    });
+
+    otpResendButton?.addEventListener('click', async () => {
+      if (otpResendButton.disabled) {
+        return;
+      }
+      await sendOtp(otpForm, true);
     });
 
     sendButtons.forEach((button) => {
@@ -728,7 +900,7 @@ export function initPitchFlow() {
       });
     });
 
-    summaryForm?.addEventListener('submit', (event) => {
+    summaryForm?.addEventListener('submit', async (event) => {
       event.preventDefault();
       summaryForm.querySelectorAll('[data-pitch-edit-cancel]').forEach((cancelButton) => {
         if (cancelButton.closest('[data-pitch-summary-item]')?.classList.contains('is-editing')) {
@@ -737,7 +909,46 @@ export function initPitchFlow() {
       });
       state.summary = Object.fromEntries(new FormData(summaryForm).entries());
       updateSummary();
-      renderStep(6);
+
+      const endpoint = flow.dataset.pitchSubmissionUrl;
+      const pitchSession = flow.dataset.pitchSession;
+      const submitButton = summaryForm.querySelector('[type="submit"]');
+      if (!endpoint || !pitchSession || submitButton?.disabled) {
+        return;
+      }
+
+      const payload = new FormData();
+      payload.append('pitch_session', pitchSession);
+      payload.append('verification_token', state.verificationToken);
+      payload.append('full_name', state.fullName);
+      payload.append('mobile', state.mobile);
+      payload.append('email', state.email || '');
+      Object.entries(API_TO_FORM_FIELD).forEach(([apiField, formField]) => {
+        payload.append(apiField, state.summary[formField] ?? state.manual[formField] ?? '');
+      });
+      if (state.pitchDeck instanceof File) {
+        payload.append('pitch_deck', state.pitchDeck, state.pitchDeck.name);
+      }
+
+      submitButton.disabled = true;
+      status.textContent = 'Submitting your pitch…';
+
+      try {
+        const response = await fetch(endpoint, {
+          method: 'POST',
+          body: payload,
+          credentials: 'same-origin',
+        });
+        const result = await response.json().catch(() => null);
+        if (!response.ok || !result?.submitted) {
+          throw new Error(result?.message || 'Your pitch could not be submitted. Please try again.');
+        }
+        renderStep(6);
+      } catch (error) {
+        status.textContent = error?.message || 'Your pitch could not be submitted. Please try again.';
+      } finally {
+        submitButton.disabled = false;
+      }
     });
 
     summaryItems.forEach((item) => {

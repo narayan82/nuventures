@@ -72,6 +72,13 @@ $asset_path = get_template_directory_uri() . '/assets/images/more-than-capital/'
             >
             <div class="more-than-capital__rotor" data-compass-rotor>
                 <img
+                    class="more-than-capital__compass-background"
+                    src="<?php echo esc_url($asset_path . 'compass_bg.svg'); ?>"
+                    alt=""
+                    width="1050"
+                    height="1050"
+                >
+                <img
                     class="more-than-capital__face"
                     src="<?php echo esc_url($asset_path . 'compass-face.png'); ?>"
                     alt=""

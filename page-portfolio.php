@@ -34,7 +34,7 @@ $portfolio_resolve_image = static function ($image, $fallback_alt) {
 get_header();
 ?>
 
-<main class="portfolio-page">
+<main class="portfolio-page" id="main-content">
     <?php get_template_part('template-parts/portfolio/journeys', null, array('resolve_image' => $portfolio_resolve_image)); ?>
     <?php get_template_part('template-parts/portfolio/company-grid', null, array('resolve_image' => $portfolio_resolve_image)); ?>
 </main>

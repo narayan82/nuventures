@@ -10,7 +10,7 @@
 get_header();
 ?>
 
-<main class="single-post-page">
+<main class="single-post-page" id="main-content">
     <?php while (have_posts()) : ?>
         <?php the_post(); ?>
 

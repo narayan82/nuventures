@@ -147,9 +147,7 @@ $last_month_index = max(
     data-latest-year="<?php echo esc_attr($latest_year); ?>"
     aria-label="<?php esc_attr_e('Journey timeline', 'nuventures'); ?>"
 >
-    <p class="nu-journey-timeline__instruction">
-        <?php esc_html_e('(Click/Tap on a timeline entry to find out more)', 'nuventures'); ?>
-    </p>
+
 
     <div class="nu-journey-timeline__sticky-years" data-timeline-sticky-years aria-hidden="true">
         <div

@@ -9,12 +9,16 @@ $pitch_is_embedded = !empty($args['embedded']);
 $pitch_close_url   = !empty($args['close_url']) ? $args['close_url'] : home_url('/');
 ?>
 
-<main
+<<?php echo $pitch_is_embedded ? 'div' : 'main'; ?>
     class="pitch-flow<?php echo $pitch_is_embedded ? ' pitch-flow--embedded' : ''; ?>"
+    <?php echo $pitch_is_embedded ? '' : 'id="main-content"'; ?>
     data-pitch-flow
     data-current-step="1"
     data-close-url="<?php echo esc_url($pitch_close_url); ?>"
     data-pitch-analysis-url="<?php echo esc_url(rest_url('nuventures/v1/analyse-pitch')); ?>"
+    data-pitch-submission-url="<?php echo esc_url(rest_url('nuventures/v1/submit-pitch')); ?>"
+    data-pitch-ajax-url="<?php echo esc_url(admin_url('admin-ajax.php')); ?>"
+    data-pitch-otp-nonce="<?php echo esc_attr(wp_create_nonce('nuventures_pitch_otp')); ?>"
     data-pitch-session="<?php echo esc_attr(nuventures_create_pitch_session_token()); ?>"
     <?php echo $pitch_is_embedded ? 'data-pitch-embedded aria-hidden="true"' : ''; ?>
 >
@@ -32,9 +36,9 @@ $pitch_close_url   = !empty($args['close_url']) ? $args['close_url'] : home_url(
         aria-labelledby="pitch-flow-title"
         tabindex="-1"
     >
-        <h1 class="pitch-flow__screen-reader-title" id="pitch-flow-title">
+        <<?php echo $pitch_is_embedded ? 'h2' : 'h1'; ?> class="pitch-flow__screen-reader-title" id="pitch-flow-title">
             <?php esc_html_e('Pitch your idea', 'nuventures'); ?>
-        </h1>
+        </<?php echo $pitch_is_embedded ? 'h2' : 'h1'; ?>>
 
         <header class="pitch-flow__header">
             <button
@@ -107,6 +111,13 @@ $pitch_close_url   = !empty($args['close_url']) ? $args['close_url'] : home_url(
                         <button class="pitch-flow__send" type="submit" aria-label="<?php esc_attr_e('Continue to mobile number', 'nuventures'); ?>">
                             <img src="<?php echo esc_url(get_template_directory_uri() . '/assets/images/pitch/send.svg'); ?>" alt="" width="29" height="29">
                         </button>
+                    </div>
+                    <div class="pitch-flow__consent">
+                        <input id="pitch-terms-accepted" type="checkbox" name="termsAccepted" checked>
+                        <span>
+                            <label for="pitch-terms-accepted"><?php esc_html_e('I agree to the', 'nuventures'); ?></label>
+                            <a href="<?php echo esc_url(home_url('/terms/')); ?>"><?php esc_html_e('Terms & Conditions', 'nuventures'); ?></a>
+                        </span>
                     </div>
                     <p class="pitch-flow__error" data-pitch-error aria-live="polite"></p>
                 </form>
@@ -192,7 +203,7 @@ $pitch_close_url   = !empty($args['close_url']) ? $args['close_url'] : home_url(
 
                     <div class="pitch-flow__field">
                         <label class="pitch-flow__screen-reader-title" for="pitch-otp">
-                            <?php esc_html_e('Four-digit OTP', 'nuventures'); ?>
+                            <?php esc_html_e('Six-digit OTP', 'nuventures'); ?>
                         </label>
                         <input
                             id="pitch-otp"
@@ -200,17 +211,20 @@ $pitch_close_url   = !empty($args['close_url']) ? $args['close_url'] : home_url(
                             type="text"
                             inputmode="numeric"
                             autocomplete="one-time-code"
-                            maxlength="4"
-                            pattern="[0-9]{4}"
-                            placeholder="<?php esc_attr_e('Enter 4 Digit OTP', 'nuventures'); ?>"
+                            maxlength="6"
+                            pattern="[0-9]{6}"
+                            placeholder="<?php esc_attr_e('Enter 6 Digit OTP', 'nuventures'); ?>"
                             required
                             data-pitch-input
                         >
-                        <button class="pitch-flow__send" type="submit" aria-label="<?php esc_attr_e('Verify mocked OTP and continue', 'nuventures'); ?>">
+                        <button class="pitch-flow__send" type="submit" aria-label="<?php esc_attr_e('Verify OTP and continue', 'nuventures'); ?>">
                             <img src="<?php echo esc_url(get_template_directory_uri() . '/assets/images/pitch/send.svg'); ?>" alt="" width="29" height="29">
                         </button>
                     </div>
                     <p class="pitch-flow__error" data-pitch-error aria-live="polite"></p>
+                    <button class="pitch-flow__otp-resend" type="button" data-pitch-otp-resend disabled>
+                        <?php esc_html_e('Resend OTP', 'nuventures'); ?>
+                    </button>
                 </form>
 
                 <div class="pitch-flow__voice">
@@ -496,4 +510,4 @@ $pitch_close_url   = !empty($args['close_url']) ? $args['close_url'] : home_url(
             </ol>
         </footer>
     </section>
-</main>
+</<?php echo $pitch_is_embedded ? 'div' : 'main'; ?>>

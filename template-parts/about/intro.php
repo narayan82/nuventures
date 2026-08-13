@@ -7,14 +7,14 @@
 ?>
 
 <section class="about-intro" aria-labelledby="about-intro-title">
-    <img
+    <!-- <img
         class="about-intro__icon"
         src="<?php echo esc_url(get_template_directory_uri() . '/assets/images/about/building.png'); ?>"
         alt=""
         width="64"
         height="64"
         aria-hidden="true"
-    >
+    > -->
 
     <h1 class="about-intro__title" id="about-intro-title"><?php esc_html_e('About Us', 'nuventures'); ?></h1>
 

@@ -44,7 +44,7 @@ while (have_posts()) :
     );
     ?>
 
-    <main class="nu-journey">
+    <main class="nu-journey" id="main-content">
         <article class="nu-journey__article">
             <?php get_template_part('template-parts/nu-journey/intro', null, $shared_args); ?>
             <?php get_template_part('template-parts/nu-journey/timeline', null, $shared_args); ?>

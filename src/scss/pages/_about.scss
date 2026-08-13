@@ -240,13 +240,20 @@
     cursor: pointer;
   }
 
+  &__profile-link {
+    position: absolute;
+    z-index: 1;
+    inset: 0;
+    border-radius: inherit;
+  }
+
   &__card--linked:hover,
-  &__card--linked:focus-visible {
+  &__card--linked:focus-within {
     border-color: $color-brand-red;
     transform: translateY(-3px);
   }
 
-  &__card--linked:focus-visible {
+  &__card--linked:focus-within {
     outline: 2px solid $color-brand-red;
     outline-offset: 3px;
   }
@@ -274,12 +281,13 @@
 
   &__identity {
     position: relative;
-    z-index: 1;
+    z-index: 2;
     display: flex;
     flex-direction: column;
     gap: 4px;
     align-items: center;
     text-align: center;
+    pointer-events: none;
   }
 
   &__name {
@@ -298,9 +306,16 @@
     line-height: 16px;
   }
 
-  &__arrow {
+  &__actions {
     position: relative;
-    z-index: 1;
+    z-index: 3;
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &__action {
     display: grid;
     width: 36px;
     height: 35px;
@@ -309,12 +324,33 @@
     background-color: #1f1f1f;
     backdrop-filter: blur(2.5px);
     place-items: center;
+    transition:
+      background-color 180ms ease,
+      transform 180ms ease;
+  }
+
+  &__action:hover,
+  &__action:focus-visible {
+    background-color: $color-brand-red;
+    transform: translateY(-2px);
+  }
+
+  &__action:focus-visible {
+    outline: 2px solid $color-brand-red;
+    outline-offset: 3px;
   }
 
   &__arrow img {
     display: block;
     width: 13px;
     height: 12px;
+  }
+
+  &__linkedin img {
+    display: block;
+    width: 18px;
+    height: 18px;
+    filter: brightness(0) invert(1);
   }
 }
 
@@ -334,6 +370,7 @@
   .about-intro,
   .about-team {
     width: calc(100% - 40px);
+    gap:20px;
   }
 
   .about-intro {
@@ -349,8 +386,8 @@
     &__map {
       width: calc(100vw - 24px);
       max-width: none;
-      margin-top: -60px;
-      margin-bottom: 20px;
+      margin-top: -20px;
+      margin-bottom: 40px;
     }
 
     &__cta {
@@ -377,8 +414,7 @@
 
     &__card {
       height: auto;
-      min-height: 235px;
-      aspect-ratio: 232 / 338;
+      min-height: 295px;
       padding: 18px 8px 12px;
     }
 

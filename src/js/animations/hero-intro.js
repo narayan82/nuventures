@@ -8,7 +8,7 @@ const SWAP_OUT_DURATION = 220;
 const SWAP_MARKER_PAUSE = 300;
 
 const initialSentence = `
-  Backing
+  We back
   <button class="hero-intro__marker-wrap hero-intro__detail-trigger" type="button" data-hero-detail-trigger><mark class="hero-intro__marker">bold founders</mark>.</button> Built by
   <button class="hero-intro__marker-wrap hero-intro__detail-trigger" type="button" data-hero-technologies-trigger><mark class="hero-intro__marker">operators</mark>.</button>
   <button class="hero-intro__marker-wrap hero-intro__detail-trigger" type="button" data-hero-future-trigger><mark class="hero-intro__marker">Conviction</mark></button>
@@ -30,9 +30,8 @@ const technologiesSentence = `
 
 const futureSentence = `
   <strong class="hero-intro__detail-lead">Conviction</strong>
-  means
-  <button class="hero-intro__marker-wrap hero-intro__detail-trigger" type="button" data-hero-reset-trigger><mark class="hero-intro__marker">backing founders</mark></button>
-  with capital and trust as they build with.
+  means backing founders with capital and trust as they build with 
+  <button class="hero-intro__marker-wrap hero-intro__detail-trigger" type="button" data-hero-reset-trigger><mark class="hero-intro__marker">NuVentures.</mark></button>
 `;
 
 export function initHeroIntro() {

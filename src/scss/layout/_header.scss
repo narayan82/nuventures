@@ -2,7 +2,8 @@
 
 .site-header {
   position: sticky;
-  z-index: 900;
+  // Keep the sticky header above all page-level sections and carousel controls.
+  z-index: 1100;
   top: 0;
   height: 80px;
   background-color: $color-white;

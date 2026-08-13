@@ -35,11 +35,12 @@ if (!$logo && !$long_title && !$description) {
         <img class="nu-journey__logo" src="<?php echo esc_url($logo['url']); ?>" alt="<?php echo esc_attr($logo['alt']); ?>" loading="eager" decoding="async">
     <?php endif; ?>
 
-    <?php if ($long_title) : ?>
-        <h1 class="nu-journey__title"><?php echo esc_html($long_title); ?></h1>
-    <?php endif; ?>
+    <h1 class="nu-journey__title"><?php echo esc_html($long_title ?: get_the_title($journey_id)); ?></h1>
 
     <?php if ($description) : ?>
         <div class="nu-journey__description"><?php echo wp_kses_post(wpautop($description)); ?></div>
     <?php endif; ?>
+    <p class="nu-journey-timeline__instruction">
+        <?php esc_html_e('(Click/Tap on a timeline entry to find out more)', 'nuventures'); ?>
+    </p>
 </header>

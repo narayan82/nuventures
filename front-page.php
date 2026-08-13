@@ -1,6 +1,6 @@
 <?php get_header(); ?>
 
-<main>
+<main id="main-content">
     <?php get_template_part('template-parts/home/hero-intro'); ?>
     <?php get_template_part('template-parts/home/stats'); ?>
     <?php get_template_part('template-parts/home/investors'); ?>
