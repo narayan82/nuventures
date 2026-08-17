@@ -152,20 +152,6 @@
     border-color: $color-brand-red;
   }
 
-  &__card--current {
-    opacity: 0.55;
-    cursor: default;
-  }
-
-  &__card--current:hover {
-    border-color: $color-border;
-  }
-
-  &__card--current:hover &__photo {
-    filter: grayscale(1);
-    transform: none;
-  }
-
   &__card:focus-visible,
   &__cta:focus-visible,
   &__control:focus-visible {
@@ -254,8 +240,9 @@
   &--person-grid &__track,
   &--person-grid.is-carousel &__track {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    grid-template-columns: repeat(auto-fit, 262px);
     gap: 20px;
+    justify-content: center;
     width: min(1200px, 100%);
     padding: 24px 0;
     overflow: visible;
@@ -264,10 +251,11 @@
 
   &--person-grid &__card {
     display: grid;
-    grid-template-rows: auto auto;
-    gap: 10px;
-    width: 100%;
-    height: auto;
+    grid-template-rows: minmax(0, 1fr);
+    gap: 0;
+    width: 262px;
+    height: 385px;
+    aspect-ratio: auto;
     padding: 0;
     overflow: visible;
     border: 0;
@@ -280,18 +268,21 @@
     position: static;
     grid-area: 1 / 1;
     width: 100%;
-    height: auto;
-    aspect-ratio: 1;
+    height: 100%;
+    aspect-ratio: auto;
     border: 1px solid $color-border;
     border-radius: 8px;
     object-fit: cover;
-    object-position: center top;
+    object-position: center bottom;
   }
 
   &--person-grid &__name {
-    grid-area: 2 / 1;
-    padding-inline: 4px;
-    font-size: 18px;
+    grid-area: 1 / 1;
+    align-self: start;
+    justify-self: center;
+    width: 100%;
+    padding: 16px 12px;
+    font-size: 22px;
     line-height: 1.25;
   }
 
@@ -307,9 +298,6 @@
     border-color: $color-brand-red;
   }
 
-  &--person-grid &__card--current:hover &__photo {
-    border-color: $color-border;
-  }
 }
 
 @media (max-width: $breakpoint-tablet) {
@@ -323,6 +311,12 @@
     &--person-grid &__track,
     &--person-grid.is-carousel &__track {
       grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    &--person-grid &__card {
+      width: 100%;
+      height: auto;
+      aspect-ratio: 262 / 385;
     }
   }
 }
@@ -354,7 +348,7 @@
       width: 100%;
       max-width: none;
       height: auto;
-      aspect-ratio: auto;
+      aspect-ratio: 262 / 385;
     }
 
     &--person-grid &__name {

@@ -62,6 +62,11 @@ $ordered_people = $people_query->posts;
         <?php foreach ($ordered_people as $person_post) : ?>
             <?php
             $person_id   = $person_post->ID;
+
+            if ($current_person_id === $person_id) {
+                continue;
+            }
+
             $person_name = get_field('name', $person_id);
             $photo       = get_field('photo', $person_id);
             $photo_id    = 0;
@@ -81,21 +86,13 @@ $ordered_people = $people_query->posts;
             }
 
             $card_class = 'home-investors__card';
-            $is_current = $current_person_id === $person_id;
 
             if (!$photo_id && !$photo_url) {
                 $card_class .= ' home-investors__card--no-photo';
             }
 
-            if ($is_current) {
-                $card_class .= ' home-investors__card--current';
-            }
             ?>
-            <?php if ($is_current) : ?>
-                <div class="<?php echo esc_attr($card_class); ?>" aria-current="page">
-            <?php else : ?>
-                <a class="<?php echo esc_attr($card_class); ?>" href="<?php echo esc_url(get_permalink($person_id)); ?>"<?php echo 'person-grid' === $layout ? '' : ' data-investor-tilt'; ?>>
-            <?php endif; ?>
+            <a class="<?php echo esc_attr($card_class); ?>" href="<?php echo esc_url(get_permalink($person_id)); ?>"<?php echo 'person-grid' === $layout ? '' : ' data-investor-tilt'; ?>>
                 <?php if ($photo_id) : ?>
                     <?php
                     echo wp_get_attachment_image(
@@ -122,18 +119,12 @@ $ordered_people = $people_query->posts;
                 <?php endif; ?>
 
                 <span class="home-investors__name"><?php echo esc_html($person_name); ?></span>
-                <?php if (!$is_current) : ?>
-                    <span class="home-investors__card-arrow" aria-hidden="true">
-                        <span class="home-investors__arrow-icon">
-                            <img src="<?php echo esc_url(get_template_directory_uri() . '/assets/images/investors/arrow-right.svg'); ?>" alt="" width="13" height="12">
-                        </span>
+                <span class="home-investors__card-arrow" aria-hidden="true">
+                    <span class="home-investors__arrow-icon">
+                        <img src="<?php echo esc_url(get_template_directory_uri() . '/assets/images/investors/arrow-right.svg'); ?>" alt="" width="13" height="12">
                     </span>
-                <?php endif; ?>
-            <?php if ($is_current) : ?>
-                </div>
-            <?php else : ?>
-                </a>
-            <?php endif; ?>
+                </span>
+            </a>
         <?php endforeach; ?>
     </div>
 
