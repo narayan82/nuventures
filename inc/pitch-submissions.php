@@ -80,6 +80,7 @@ function nuventures_store_pitch_submission(WP_REST_Request $request) {
 
     $existing = get_transient('nuv_submitted_' . hash_hmac('sha256', $session_token, wp_salt('secure_auth')));
     if ($existing) {
+        nuventures_send_pitch_notification(absint($existing));
         return rest_ensure_response(array('submitted' => true));
     }
 
@@ -152,6 +153,8 @@ function nuventures_store_pitch_submission(WP_REST_Request $request) {
     set_transient('nuv_submitted_' . hash_hmac('sha256', $session_token, wp_salt('secure_auth')), $post_id, NUVENTURES_PITCH_SESSION_TTL);
     delete_transient(nuventures_pitch_analysis_transient_key($session_token));
     delete_transient(nuventures_pitch_otp_transient_key($verification_token));
+
+    nuventures_send_pitch_notification($post_id);
 
     return rest_ensure_response(array('submitted' => true));
 }
