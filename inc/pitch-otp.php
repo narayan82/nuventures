@@ -11,7 +11,7 @@ const NUVENTURES_PITCH_OTP_TTL             = 1800;
 const NUVENTURES_PITCH_OTP_RESEND_COOLDOWN = 45;
 const NUVENTURES_PITCH_OTP_RATE_WINDOW     = 900;
 const NUVENTURES_PITCH_OTP_RATE_LIMIT      = 5;
-const NUVENTURES_PITCH_OTP_TEMPLATE        = 'play-otp';
+const NUVENTURES_PITCH_OTP_TEMPLATE        = 'IXDEAS OTP';
 
 /** Normalize an Indian mobile number to ten digits. */
 function nuventures_pitch_normalize_mobile($mobile) {
