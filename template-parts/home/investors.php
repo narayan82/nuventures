@@ -5,6 +5,14 @@
  * @package NuVentures
  */
 
+$current_person_id = isset($args['current_person_id']) ? absint($args['current_person_id']) : 0;
+$layout            = isset($args['layout']) ? sanitize_key($args['layout']) : '';
+$section_class     = 'home-investors';
+
+if ('person-grid' === $layout) {
+    $section_class .= ' home-investors--person-grid';
+}
+
 $partner_taxonomy = '';
 
 foreach (get_object_taxonomies('person', 'names') as $person_taxonomy) {
@@ -47,7 +55,7 @@ $people_query = new WP_Query(
 $ordered_people = $people_query->posts;
 ?>
 
-<section class="home-investors" data-investors-carousel aria-labelledby="home-investors-title">
+<section class="<?php echo esc_attr($section_class); ?>" data-investors-carousel aria-labelledby="home-investors-title">
     <h2 class="home-investors__title" id="home-investors-title"><?php esc_html_e('Meet the investors', 'nuventures'); ?></h2>
 
     <div class="home-investors__track" data-investors-track>
@@ -73,12 +81,21 @@ $ordered_people = $people_query->posts;
             }
 
             $card_class = 'home-investors__card';
+            $is_current = $current_person_id === $person_id;
 
             if (!$photo_id && !$photo_url) {
                 $card_class .= ' home-investors__card--no-photo';
             }
+
+            if ($is_current) {
+                $card_class .= ' home-investors__card--current';
+            }
             ?>
-            <a class="<?php echo esc_attr($card_class); ?>" href="<?php echo esc_url(get_permalink($person_id)); ?>" data-investor-tilt>
+            <?php if ($is_current) : ?>
+                <div class="<?php echo esc_attr($card_class); ?>" aria-current="page">
+            <?php else : ?>
+                <a class="<?php echo esc_attr($card_class); ?>" href="<?php echo esc_url(get_permalink($person_id)); ?>"<?php echo 'person-grid' === $layout ? '' : ' data-investor-tilt'; ?>>
+            <?php endif; ?>
                 <?php if ($photo_id) : ?>
                     <?php
                     echo wp_get_attachment_image(
@@ -105,12 +122,18 @@ $ordered_people = $people_query->posts;
                 <?php endif; ?>
 
                 <span class="home-investors__name"><?php echo esc_html($person_name); ?></span>
-                <span class="home-investors__card-arrow" aria-hidden="true">
-                    <span class="home-investors__arrow-icon">
-                        <img src="<?php echo esc_url(get_template_directory_uri() . '/assets/images/investors/arrow-right.svg'); ?>" alt="" width="13" height="12">
+                <?php if (!$is_current) : ?>
+                    <span class="home-investors__card-arrow" aria-hidden="true">
+                        <span class="home-investors__arrow-icon">
+                            <img src="<?php echo esc_url(get_template_directory_uri() . '/assets/images/investors/arrow-right.svg'); ?>" alt="" width="13" height="12">
+                        </span>
                     </span>
-                </span>
-            </a>
+                <?php endif; ?>
+            <?php if ($is_current) : ?>
+                </div>
+            <?php else : ?>
+                </a>
+            <?php endif; ?>
         <?php endforeach; ?>
     </div>
 

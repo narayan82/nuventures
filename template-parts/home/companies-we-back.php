@@ -10,7 +10,7 @@ $companies_query = new WP_Query(
         'post_type'              => 'nu-journey',
         'post_status'            => 'publish',
         'posts_per_page'         => -1,
-        'orderby'                => 'date',
+        'orderby'                => 'menu_order',
         'order'                  => 'ASC',
         'no_found_rows'          => true,
         'ignore_sticky_posts'    => true,
@@ -46,7 +46,7 @@ $resolve_image = static function ($image, $fallback_alt) {
 ?>
 
 <section class="companies-we-back" data-companies-carousel aria-labelledby="companies-we-back-title">
-    <h2 class="companies-we-back__title" id="companies-we-back-title"><?php esc_html_e('Nu Journeys with our Bold Founders', 'nuventures'); ?></h2>
+    <h2 class="companies-we-back__title" id="companies-we-back-title"><?php esc_html_e('NuJourney with our Bold Founders', 'nuventures'); ?></h2>
      <p class="podcast-quotes__supporting">
                 <?php esc_html_e('Explore the  stages as Brands go from an Idea to reality', 'nuventures'); ?>
             </p>

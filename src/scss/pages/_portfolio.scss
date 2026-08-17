@@ -54,7 +54,7 @@
     flex: 0 0 650px;
     align-items: center;
     width: 550px;
-    height: 350px;
+    height: 400px;
     overflow: hidden;
     border-radius: 12px;
     background-color: #f3f3f3;
@@ -92,6 +92,33 @@
     padding: 20px;
     border-radius: 0 10px 10px 0;
     background-color: #f0f0f0;
+  }
+
+  &__heading {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    align-items: flex-start;
+  }
+
+  &__logo {
+    display: flex;
+    align-items: center;
+    width: 220px;
+    height: 66px;
+    padding:5px;
+    background:white;
+    border-radius: 12px;
+  }
+
+  &__logo-image {
+    display: block;
+    width: auto;
+    max-width: 220px;
+    height: auto;
+    max-height: 56px;
+    object-fit: contain;
+    margin: 0 auto;
   }
 
   &__title {

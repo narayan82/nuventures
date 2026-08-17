@@ -120,6 +120,17 @@ while (have_posts()) :
                 <?php get_template_part('template-parts/person/articles', null, $shared_args); ?>
             </div>
         </article>
+
+        <?php
+        get_template_part(
+            'template-parts/home/investors',
+            null,
+            array(
+                'current_person_id' => $person_id,
+                'layout'            => 'person-grid',
+            )
+        );
+        ?>
     </main>
     <?php
 endwhile;

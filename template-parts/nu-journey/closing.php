@@ -1,6 +1,6 @@
 <?php
 /**
- * Nu Journey closing copy.
+ * NuJourney closing copy.
  *
  * @package NuVentures
  */

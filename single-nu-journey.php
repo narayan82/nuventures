@@ -1,6 +1,6 @@
 <?php
 /**
- * Single Nu Journey template.
+ * Single NuJourney template.
  *
  * @package NuVentures
  */

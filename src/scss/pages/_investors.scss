@@ -152,6 +152,20 @@
     border-color: $color-brand-red;
   }
 
+  &__card--current {
+    opacity: 0.55;
+    cursor: default;
+  }
+
+  &__card--current:hover {
+    border-color: $color-border;
+  }
+
+  &__card--current:hover &__photo {
+    filter: grayscale(1);
+    transform: none;
+  }
+
   &__card:focus-visible,
   &__cta:focus-visible,
   &__control:focus-visible {
@@ -231,6 +245,71 @@
     background-color: $color-brand-red;
     color: $color-white;
   }
+
+  &--person-grid {
+    min-height: 0;
+    padding: 64px 20px;
+  }
+
+  &--person-grid &__track,
+  &--person-grid.is-carousel &__track {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 20px;
+    width: min(1200px, 100%);
+    padding: 24px 0;
+    overflow: visible;
+    scroll-snap-type: none;
+  }
+
+  &--person-grid &__card {
+    display: grid;
+    grid-template-rows: auto auto;
+    gap: 10px;
+    width: 100%;
+    height: auto;
+    padding: 0;
+    overflow: visible;
+    border: 0;
+    background: transparent;
+    transform: none;
+    will-change: auto;
+  }
+
+  &--person-grid &__photo {
+    position: static;
+    grid-area: 1 / 1;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1;
+    border: 1px solid $color-border;
+    border-radius: 8px;
+    object-fit: cover;
+    object-position: center top;
+  }
+
+  &--person-grid &__name {
+    grid-area: 2 / 1;
+    padding-inline: 4px;
+    font-size: 18px;
+    line-height: 1.25;
+  }
+
+  &--person-grid &__card-arrow {
+    grid-area: 1 / 1;
+    align-self: end;
+    justify-self: center;
+    margin-bottom: 12px;
+  }
+
+  &--person-grid &__card:hover &__photo,
+  &--person-grid &__card:focus-visible &__photo {
+    border-color: $color-brand-red;
+  }
+
+  &--person-grid &__card--current:hover &__photo {
+    border-color: $color-border;
+  }
 }
 
 @media (max-width: $breakpoint-tablet) {
@@ -239,6 +318,11 @@
 
     &__track {
       width: 100%;
+    }
+
+    &--person-grid &__track,
+    &--person-grid.is-carousel &__track {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
     }
   }
 }
@@ -253,6 +337,28 @@
       max-width: 300px;
       height: 440px;
       aspect-ratio: 1;
+    }
+
+    &--person-grid {
+      padding: 48px 16px;
+    }
+
+    &--person-grid &__track,
+    &--person-grid.is-carousel &__track {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 20px 12px;
+      padding-block: 20px;
+    }
+
+    &--person-grid &__card {
+      width: 100%;
+      max-width: none;
+      height: auto;
+      aspect-ratio: auto;
+    }
+
+    &--person-grid &__name {
+      font-size: 15px;
     }
   }
 }

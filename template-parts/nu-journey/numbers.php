@@ -1,6 +1,6 @@
 <?php
 /**
- * Nu Journey numbers.
+ * NuJourney numbers.
  *
  * @package NuVentures
  */

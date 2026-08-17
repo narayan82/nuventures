@@ -1,6 +1,6 @@
 <?php
 /**
- * Nu Journey chronological timeline.
+ * NuJourney chronological timeline.
  *
  * @package NuVentures
  */

@@ -108,7 +108,7 @@ function nuventures_seo_description() {
     }
 
     if (is_page('portfolio')) {
-        return nuventures_seo_trim('Explore the founders, companies and Nu Journeys backed by NuVentures as they build technologies and businesses shaping what comes next.');
+        return nuventures_seo_trim('Explore the founders, companies and NuJourney stories backed by NuVentures as they build technologies and businesses shaping what comes next.');
     }
 
     if (is_page('initiatives')) {

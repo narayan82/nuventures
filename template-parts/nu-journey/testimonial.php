@@ -1,6 +1,6 @@
 <?php
 /**
- * Nu Journey related testimonial.
+ * NuJourney related testimonial.
  *
  * @package NuVentures
  */
