@@ -1,0 +1,96 @@
+.nuventures-company-order {
+  max-width: 860px;
+}
+
+.nuventures-company-order__list {
+  margin: 24px 0 0;
+}
+
+.nuventures-company-order__item,
+.nuventures-company-order__placeholder {
+  min-height: 68px;
+  margin: 0 0 8px;
+  border: 1px solid #dcdcde;
+  border-radius: 6px;
+}
+
+.nuventures-company-order__item {
+  display: grid;
+  grid-template-columns: 44px 56px minmax(0, 1fr);
+  gap: 12px;
+  align-items: center;
+  padding: 8px 14px 8px 8px;
+  background: #ffffff;
+}
+
+.nuventures-company-order__placeholder {
+  border: 1px dashed #da0009;
+  background: #fff5f5;
+}
+
+.nuventures-company-order__handle {
+  display: grid;
+  width: 36px;
+  height: 44px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: #50575e;
+  cursor: grab;
+  place-items: center;
+  touch-action: none;
+  user-select: none;
+}
+
+.nuventures-company-order__handle:active {
+  cursor: grabbing;
+}
+
+.nuventures-company-order__handle:focus-visible {
+  border-radius: 4px;
+  outline: 2px solid #2271b1;
+  outline-offset: 1px;
+}
+
+.nuventures-company-order__media {
+  display: grid;
+  width: 56px;
+  height: 48px;
+  overflow: hidden;
+  border: 1px solid #eeeeee;
+  border-radius: 4px;
+  background: #ffffff;
+  place-items: center;
+}
+
+.nuventures-company-order__logo {
+  display: block;
+  width: 48px;
+  height: 40px;
+  object-fit: contain;
+}
+
+.nuventures-company-order__logo-placeholder {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: #f0f0f1;
+}
+
+.nuventures-company-order__name {
+  font-size: 14px;
+}
+
+.nuventures-company-order__status {
+  display: inline-block;
+  margin-left: 12px;
+  font-weight: 600;
+}
+
+.nuventures-company-order__status.is-success {
+  color: #008a20;
+}
+
+.nuventures-company-order__status.is-error {
+  color: #b32d2e;
+}

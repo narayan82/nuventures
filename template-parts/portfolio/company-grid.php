@@ -16,7 +16,10 @@ $portfolio_query = new WP_Query(
         'post_type'              => 'company',
         'post_status'            => 'publish',
         'posts_per_page'         => -1,
-        'orderby'                => 'title',
+        'orderby'                => array(
+            'menu_order' => 'ASC',
+            'title'      => 'ASC',
+        ),
         'order'                  => 'ASC',
         'no_found_rows'          => true,
         'ignore_sticky_posts'    => true,
@@ -261,6 +264,7 @@ $asset_path = get_template_directory_uri() . '/assets/images/portfolio/';
         <label class="portfolio-companies__sort">
             <span class="screen-reader-text"><?php esc_html_e('Sort companies', 'nuventures'); ?></span>
             <select data-portfolio-sort>
+                <option value=""><?php esc_html_e('Sort (Default)', 'nuventures'); ?></option>
                 <option value="asc"><?php esc_html_e('Sort (A-Z)', 'nuventures'); ?></option>
                 <option value="desc"><?php esc_html_e('Sort (Z-A)', 'nuventures'); ?></option>
             </select>

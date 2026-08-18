@@ -32,23 +32,14 @@ $footer_asset_path = get_template_directory_uri() . '/assets/images/footer/';
             </ul>
         </nav>
 
-        <?php // TODO: Replace the social placeholder URLs with the official profiles. ?>
+        <?php ?>
         <ul class="site-footer__socials" aria-label="<?php esc_attr_e('Social media', 'nuventures'); ?>">
             <li>
                 <a href="https://www.youtube.com/@nuventures" target="_blank" aria-label="<?php esc_attr_e('YouTube', 'nuventures'); ?>">
                     <img src="<?php echo esc_url($footer_asset_path . 'youtube.svg'); ?>" alt="" width="24" height="24">
                 </a>
             </li>
-            <li>
-                <a href="https://x.com/NuVentures_in" target="_blank" aria-label="<?php esc_attr_e('X', 'nuventures'); ?>">
-                    <img src="<?php echo esc_url($footer_asset_path . 'x.svg'); ?>" alt="" width="24" height="24">
-                </a>
-            </li>
-            <li>
-                <a href="https://www.instagram.com/nuventures.vc/" target="_blank" aria-label="<?php esc_attr_e('Instagram', 'nuventures'); ?>">
-                    <img src="<?php echo esc_url($footer_asset_path . 'instagram.svg'); ?>" alt="" width="24" height="24">
-                </a>
-            </li>
+            
             <li>
                 <a href="https://www.linkedin.com/company/nuventures" aria-label="<?php esc_attr_e('LinkedIn', 'nuventures'); ?>">
                     <img src="<?php echo esc_url($footer_asset_path . 'linkedin.svg'); ?>" alt="" width="24" height="24">

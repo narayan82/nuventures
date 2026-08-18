@@ -13,6 +13,7 @@ export function initPortfolioFilters() {
     }
 
     const cards = Array.from(grid.querySelectorAll('[data-company-name]'));
+    const defaultOrder = new Map(cards.map((card, index) => [card, index]));
     const infoButtons = Array.from(grid.querySelectorAll('[data-company-info]'));
 
     const closeDescriptions = (exceptButton = null) => {
@@ -52,13 +53,18 @@ export function initPortfolioFilters() {
       const searchQuery = search.value.trim().toLocaleLowerCase();
       const selectedStage = stage.value;
       const selectedCity = city.value;
-      const direction = sort.value === 'desc' ? -1 : 1;
+      const selectedSort = sort.value;
       let visibleCount = 0;
 
-      cards
-        .sort((first, second) => (
-          first.dataset.companyName.localeCompare(second.dataset.companyName) * direction
-        ))
+      [...cards]
+        .sort((first, second) => {
+          if (selectedSort === 'asc' || selectedSort === 'desc') {
+            const direction = selectedSort === 'desc' ? -1 : 1;
+            return first.dataset.companyName.localeCompare(second.dataset.companyName) * direction;
+          }
+
+          return defaultOrder.get(first) - defaultOrder.get(second);
+        })
         .forEach((card) => {
           let companyStages = [];
           let companyCities = [];
