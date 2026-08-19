@@ -6,6 +6,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <?php wp_head(); ?>
+    <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-LB55Z16D4F"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-LB55Z16D4F');
+</script>
 </head>
 
 <body <?php body_class(); ?>>

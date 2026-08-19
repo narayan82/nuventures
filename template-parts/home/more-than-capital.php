@@ -80,7 +80,7 @@ $asset_path = get_template_directory_uri() . '/assets/images/more-than-capital/'
                 >
                 <img
                     class="more-than-capital__face"
-                    src="<?php echo esc_url($asset_path . 'compass-face.png'); ?>"
+                    src="<?php echo esc_url($asset_path . 'compass-face.webp'); ?>"
                     alt=""
                     width="266"
                     height="266"
@@ -88,7 +88,7 @@ $asset_path = get_template_directory_uri() . '/assets/images/more-than-capital/'
                 <span class="more-than-capital__needle-crop">
                     <img
                         class="more-than-capital__needle"
-                        src="<?php echo esc_url($asset_path . 'compass-needle.png'); ?>"
+                        src="<?php echo esc_url($asset_path . 'compass-needle.webp'); ?>"
                         alt=""
                         width="169"
                         height="171"
