@@ -1,3 +1,5 @@
+import { createCarouselAutoplay } from './carousel-autoplay.js';
+
 const EDGE_TOLERANCE = 2;
 
 export function initCompaniesCarousels() {
@@ -7,6 +9,8 @@ export function initCompaniesCarousels() {
     const previousButton = carousel.querySelector('[data-companies-previous]');
     const nextButton = carousel.querySelector('[data-companies-next]');
     let hasInitialised = false;
+    let isOverflowing = false;
+    let autoplay = null;
 
     if (!track || !controls || !previousButton || !nextButton) {
       return;
@@ -35,7 +39,7 @@ export function initCompaniesCarousels() {
       );
       const contentWidth = cardsWidth + Math.max(0, cards.length - 1) * gap;
       const wrapperWidth = Math.min(1200, track.clientWidth);
-      const isOverflowing = contentWidth > wrapperWidth + EDGE_TOLERANCE;
+      isOverflowing = contentWidth > wrapperWidth + EDGE_TOLERANCE;
 
       carousel.classList.toggle('is-carousel', isOverflowing);
 
@@ -51,6 +55,7 @@ export function initCompaniesCarousels() {
       nextButton.hidden = !isOverflowing;
       previousButton.disabled = !isOverflowing || track.scrollLeft <= EDGE_TOLERANCE;
       nextButton.disabled = !isOverflowing || track.scrollLeft >= maximumScroll - EDGE_TOLERANCE;
+      autoplay?.restart();
     };
 
     const move = (direction) => {
@@ -65,6 +70,21 @@ export function initCompaniesCarousels() {
         behavior: 'smooth',
       });
     };
+
+    autoplay = createCarouselAutoplay({
+      carousel,
+      shouldPlay: () => track.scrollWidth > track.clientWidth + EDGE_TOLERANCE,
+      advance: () => {
+        const maximumScroll = Math.max(0, track.scrollWidth - track.clientWidth);
+
+        if (track.scrollLeft >= maximumScroll - EDGE_TOLERANCE) {
+          track.scrollTo({ left: 0, behavior: 'smooth' });
+          return;
+        }
+
+        move(1);
+      },
+    });
 
     previousButton.addEventListener('click', () => move(-1));
     nextButton.addEventListener('click', () => move(1));

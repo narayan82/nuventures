@@ -1,3 +1,5 @@
+import { createCarouselAutoplay } from './carousel-autoplay.js';
+
 const EDGE_TOLERANCE = 2;
 
 export function initPortfolioCarousels() {
@@ -6,6 +8,8 @@ export function initPortfolioCarousels() {
     const previousButton = carousel.querySelector('[data-portfolio-journeys-previous]');
     const nextButton = carousel.querySelector('[data-portfolio-journeys-next]');
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let isOverflowing = false;
+    let autoplay = null;
 
     if (!track || !previousButton || !nextButton) {
       return;
@@ -20,13 +24,14 @@ export function initPortfolioCarousels() {
     };
 
     const updateState = () => {
-      const isOverflowing = track.scrollWidth > track.clientWidth + EDGE_TOLERANCE;
+      isOverflowing = track.scrollWidth > track.clientWidth + EDGE_TOLERANCE;
       const maximumScroll = Math.max(0, track.scrollWidth - track.clientWidth);
 
       previousButton.hidden = !isOverflowing;
       nextButton.hidden = !isOverflowing;
       previousButton.disabled = !isOverflowing || track.scrollLeft <= EDGE_TOLERANCE;
       nextButton.disabled = !isOverflowing || track.scrollLeft >= maximumScroll - EDGE_TOLERANCE;
+      autoplay?.restart();
     };
 
     const move = (direction) => {
@@ -39,6 +44,21 @@ export function initPortfolioCarousels() {
         });
       }
     };
+
+    autoplay = createCarouselAutoplay({
+      carousel,
+      shouldPlay: () => track.scrollWidth > track.clientWidth + EDGE_TOLERANCE,
+      advance: () => {
+        const maximumScroll = Math.max(0, track.scrollWidth - track.clientWidth);
+
+        if (track.scrollLeft >= maximumScroll - EDGE_TOLERANCE) {
+          track.scrollTo({ left: 0, behavior: 'smooth' });
+          return;
+        }
+
+        move(1);
+      },
+    });
 
     previousButton.addEventListener('click', () => move(-1));
     nextButton.addEventListener('click', () => move(1));

@@ -9,6 +9,8 @@ require_once get_template_directory() . '/inc/person-helpers.php';
 require_once get_template_directory() . '/inc/seo.php';
 
 function nuventures_assets() {
+    $main_script_path = get_template_directory() . '/assets/dist/js/main.js';
+
     wp_enqueue_style(
         'nuventures-google-fonts',
         'https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=Lora:ital,wght@0,400;0,500;1,400&display=swap',
@@ -26,7 +28,7 @@ function nuventures_assets() {
         'nuventures-main',
         get_template_directory_uri() . '/assets/dist/js/main.js',
         [],
-        null,
+        file_exists($main_script_path) ? (string) filemtime($main_script_path) : null,
         true
     );
 }
